@@ -1,0 +1,85 @@
+---
+title: "R İLE ÇOK DEĞİŞKENLİ İSTATİSTİK ve PSİKOMETRİ"
+author: "Kübra Atalay Kabasakal"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## OLC733
+
+**Eğitimde Ölçme ve Değerlendirme**
+  **Doktora Programı**
+  
+## Açıklama: 
+
+- Bu dersin amacı, R yazılımını kullanarak veri üzerinde istenilen çok değişkenli istatistiksel ve psikometrik işlemlerin yapılabilmesini sağlamaktır. 
+
+- Tez ve makale çalışmalarında öğrencilerimizin analizlerini R yazılımı ile hiçbir paket programa ihtiyaç duymadan kendi başlarına yapmalarını sağlamaktır.  
+
+## Amaçlar: 
+
+- R ile çok değişkenli istatistik analizlerini yapabilir. 
+- R yazılımındaki psikometri paketlerinin kullanımını kavrar. 
+- R yazılımı ile ölçme kuramları analizlerini yapabilir. 
+- İleri düzey programlama ve algoritma mantığını kavrar. 
+- Paket programları ile yapılamayacak olan analizleri fonksiyon yazarak yapabilir.
+
+## Metaryeller: 
+
+- güncellenecektir.
+
+## Değerlendirme
+
+- Dönem içi değerlendirmeler haftalık yapılacaktır. İkinci hafta itibari ile ders 
+başlangıç saatinde moodlede bir önceki haftanın konularından tek soruluk bir mini sınav bulunacaktır. Bu sınava ilişkin cevabı 20 dakika içinde moodle yüklemeniz beklenecektir.
+
+
+
+- %50 Final
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(iheiddown)
+startdate <- as.Date("2023-02-27")
+```
+
+
+## Ders İçerik
+### Hafta 1 `r advdate (startdate, 1)`: Varsayımlar 
+- Verinin Doğruluğu - `r emo::ji("press")`[sunu](01_Veri_Inceleme.pdf) - `r emo::ji("software")`[R](01_Veri_Inceleme.R)
+- Kayıp veri Miktarı ve Dağılımı
+- Tek Değişkenli ve Çok Değişkenli Uç Değerler (Outliers)
+- Normallik ve Çok değişkenli normallik
+  - Varyansların homojenliği
+  - Veri dönüştürme
+  - Çoklu Bağlantı (Multicollinearity) ve Tekillik (Singularity)
+
+### Hafta 2 `r advdate (startdate, 2)`: Açımlayıcı Faktör Analizi
+- Temel Kavramlar
+  - Örüntü Katsayısı
+  - Yapı Katsayısı
+  - Ortak Varyans Katsayısı
+  - Özdeğerler
+  - Örneklem Büyüklüğü
+- Bir Örnek
+  - KMO ve Barlet Testi
+  - Paralel Analiz ve Faktör Sayısı
+  - Örüntü Katsayaıları
+- Döndürme ve Faktör Yorumları
+        
+### Hafta 3 `r advdate (startdate, 3)`: Yol Analizi- I
+
+### Hafta 3  `r advdate(startdate, 4)`: Yol Analizi- I
+### Hafta 3  `r advdate(startdate, 5)`: Doğrulayıcı Faktör Analizi
+### Hafta 3  `r advdate(startdate, 6)`: Doğrulayıcı Faktör Analizi
+### Hafta 3  `r advdate(startdate, 7)`: Klasik Test Kuramı
+### Hafta 3  `r advdate(startdate, 8)`: Klasik Test Kuramına Dayalı DMF Analizleri
+### Hafta 3  `r advdate(startdate, 9)`: Klasik Test Kuramına Dayalı Eşitleme Analizleri
+### Hafta 3 `r advdate(startdate, 10)`: Klasik Test Kuramına Dayalı Eşitleme Analizleri
+### Hafta 3   `r advdate(startdate, 11)`: Veri Üretimi- İki kategorili Modeler
+### Hafta 3  `r advdate(startdate, 12)`: Veri Üretimi- Çok kategorili Modeler
+### Hafta 3 `r advdate(startdate, 13)`: Madde Tepki Kuramı Dayalı DMF Analizleri
+### Hafta 3  `r advdate(startdate, 14)`: -
