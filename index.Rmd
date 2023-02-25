@@ -2,7 +2,16 @@
 title: "R İLE ÇOK DEĞİŞKENLİ İSTATİSTİK ve PSİKOMETRİ"
 author: "Kübra Atalay Kabasakal"
 date: "`r Sys.Date()`"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+    theme:  default
+    highlight: null
+    css: styles.css
 ---
 
 ```{r setup, include=FALSE}
@@ -28,9 +37,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - İleri düzey programlama ve algoritma mantığını kavrar. 
 - Paket programları ile yapılamayacak olan analizleri fonksiyon yazarak yapabilir.
 
-## Metaryeller: 
 
-- güncellenecektir.
 
 ## Değerlendirme
 
@@ -48,11 +55,11 @@ startdate <- as.Date("2023-02-27")
 
 
 ## Ders İçerik
-### Hafta 1 `r advdate (startdate, 1)`: Varsayımlar 
+### Hafta 1 27 Subat: Varsayımlar 
 - Verinin Doğruluğu - `r emo::ji("press")`[sunu](01_Veri_Inceleme.pdf) - `r emo::ji("software")`[R](01_Veri_Inceleme.R)
-- Kayıp veri Miktarı ve Dağılımı
-- Tek Değişkenli ve Çok Değişkenli Uç Değerler (Outliers)
-- Normallik ve Çok değişkenli normallik
+- Kayıp veri Miktarı ve Dağılımı `r emo::ji("press")`[sunu](02_Kayıp_Degerler.pdf") - `r emo::ji("software")`[R](02_Kayıp_Degerler.R")
+- Normallik ve Çok değişkenli normallik `r emo::ji("press")`[sunu]("03_Normallik.pdf") - `r emo::ji("software")`[R]("03_Normallik.R)
+  - Tek Değişkenli ve Çok Değişkenli Uç Değerler (Outliers)
   - Varyansların homojenliği
   - Veri dönüştürme
   - Çoklu Bağlantı (Multicollinearity) ve Tekillik (Singularity)
