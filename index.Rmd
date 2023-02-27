@@ -19,9 +19,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-# **Eğitimde Ölçme ve Değerlendirme**
-  **Doktora Programı** **OLC733**
   
 ## Açıklama
 
