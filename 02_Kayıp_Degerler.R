@@ -1,13 +1,4 @@
-knitr::opts_chunk$set(cache=TRUE)
-knitr::opts_chunk$set(fig.path='figs/')
-knitr::opts_chunk$set(cache.path='cache/')
 
-knitr::opts_chunk$set(
-  fig.process = function(x) {
-    x2 = sub('-\\d+([.][a-z]+)$', '\\1', x)
-    if (file.rename(x, x2)) x2 else x
-  }
-)
 library(tidyverse)
 library(stevemisc)
 library(knitr)
