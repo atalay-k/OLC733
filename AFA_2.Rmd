@@ -1,0 +1,727 @@
+---
+title: "`r emo::ji('stats')` AFA"
+subtitle: "`r emo::ji('graph')` Örnek Uygulama"
+author: "`r emo::ji('teacher')`Dr. Kübra Atalay Kabasakal"
+date: "Bahar 2023"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+---
+
+
+<!-- options(download.file.method="libcurl") -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+options(digits=3)
+library(dplyr)
+library(tidyverse)
+library(dplyr)
+library(tuev)
+library(emo)
+library(knitr)
+
+```
+
+
+## Örnek Veri
+
+- Veri Amerika Birleşik Devletleri ve Kanada'daki üniversite kütüphanelerinde hizmet kalitesine ilişkin kullanıcı algıları 
+çalışmasından (Cook & Thompson, 2001; Thompson, Cook, & 
+Heath, 2001; Thompson, Cook, & Thompson, 2002) rastgele 
+örneklenmiştir.
+
+- Veri Thompson’ın (2004) kitabında Appendix A’da verilmiş olup 12 
+(gözlenen/ölçülen) değişkene ilişkin 100 lisansüstü öğrenci ve 100 
+akademik personel tarafından sağlanan derecelendirmeleri 
+içermektedir. 
+
+-----
+.xsmall[- Cook, C., &. Thompson, B. (2001). Psychometric properties of scores from the Web-based 
+LibQUAL+™ study of perceptions of library service quality. Library Trends, 49, 585-604. 
+- Thompson, B. (2004). Exploratory and confirmatory factor analysis: Understanding concepts 
+and applications. Washington, DC: American Psychological Association.
+- Thompson, B., Cook, C., & Heath, F. (2001). How many dimensions does it take to measure 
+users' perceptions of libraries?: A "LibQUAL+™" study, portal: Libraries and the 
+Academy, 1, 129-138.
+- Thompson, B., Cook, C., & Thompson, R. L. (2002). Reliability and structure of LibQUAL+™ 
+scores: Measuring perceived library service quality, portal: Libraries and the Academy, 2, 
+3-12.]
+
+---
+## Örnek Veri
+
+- `r emo::ji("link")`[Örnek veri AFA.sav](data/AFA.sav) için ilgili veriden ilk 11 değişkene ilişkin 100 
+lisansüstü öğrenci tarafından sağlanan derecelendirmeler 
+alınmıştır. Örnek veride ele alınan 11 gözlenen değişken 
+aşağıdaki gibidir:
+
+```{r echo=FALSE, fig.align='center',out.width="75%"}
+knitr::include_graphics("img/AFA_1.PNG")
+```
+
+---
+## İlişki Katsayıları Matrisi
+
+- Değişkenler için **toplanan puanlar**, değişkenler 
+arasındaki iki değişkenli ilişkiler matrisini hesaplamak için kullanılır. AFA’da analiz edilen bu **ilişkiler matrisidir.**
+
+- Bir veri seti için ilişki matrisi verildiğinde (örneğin, $R_{11x11}$ ), faktör analizinin tüm adımları (faktör puanlarının hesaplanması hariç), orijinal verilere (örneğin, $X_{100x11}$  erişim olmadan bile 
+gerçekleştirilebilir. 
+
+- Pearson momentler-çarpımı iki değişkenli korelasyon matrisi AFA’da en çok kullanılan ilişkiler matrisidir. 
+  -  Çoğu istatistiksel pakette, AFA'da varsayılan (kullanıcı varsayılan seçimi değiştirmedikçe) ilişkilendirme matrisi Pearson korelasyon matrisidir. 
+Ancak başka seçenekler de vardır. 
+
+---
+## İlişki Katsayıları Matrisi
+
+- İlişkileri karakterize eden farklı istatistikler, verilerin farklı yönlerine duyarlıdır. Farklı ilişki istatistikleri, verilerin altında **farklı ölçek 
+düzeylerinin yattığını** varsayar. 
+
+- Örneğin, **Pearson r**, verilerin **eşit aralıklı** olarak ölçeklenmesini gerektirir. 
+Diğer yandan **Spearman's rho**, yalnızca verilerin **en azından sıralı** olarak 
+ölçeklendiğini varsayar. 
+
+---
+## İlişki Katsayıları Matrisi
+
+- **Spearman’s rho**, aralık verileri bağları olmayan 
+sıralamalara dönüştürüldüğünde, iki değişken arasındaki **Pearson r**'dir.
+
+- Aslında ister sıralı ister eşit aralık verileriyle hesaplanmış olsun, Spearman’s rho şu soruya yanıt verir: **İki değişken, bireyleri tam olarak aynı sırada mı sıralıyor?** Pearson r bu soruyu da değerlendirir ancak sıralı puanlar arasındaki mesafeleri de hesaba katar. 
+
+- Spearman’s rho, verilerde böyle bir bilginin bulunmadığını varsayar (veya bu bilgiyi göz ardı eder), bu nedenle her iki değişken de sıralı olarak ölçeklendiğinde **rho** kullanılabilir. 
+
+- ikili puanlana veriler için ise korelasyon matrisinin **tetrakorik korelasyonlardan** elde edilmesi  gerekmektedir.
+
+---
+## İlişki Katsayıları Matrisi
+
+- Bu iki ilişki matrisi,  **kovaryans matrisi** de olabilir. Birçok bağlamda kovaryans, ilişkiyi veya ilişkiyi tanımlamak için değil, korelasyon katsayısının elde edilmesinde **bir ara 
+hesaplama olarak** kullanılır. 
+
+- Kovaryans nadiren kullanılır, çünkü korelasyondan farklı olarak **kovaryans, kesin bir olası değerler 
+aralığına sahip değildir.** 
+
+---
+## İlişki Katsayıları Matrisi
+
+- Kovaryans, iki değişkenin üç yönünden ortaklaşa etkilenir: 
+
+  - iki değişken arasındaki **korelasyon**, 
+  - birinci değişkenin **değişkenliği** ve 
+  - ikinci değişkenin **değişkenliği**. 
+
+- Bu nedenle, açımlayıcı faktörler bir 
+kovaryans matrisinden çıkarıldığında, bazı faktörler korelasyonların 
+bir işlevi olabilirken, diğerleri daha çok puan yayılmasının bir işlevi 
+olabilir. 
+- Bazen faktörlerimizin puanların bir dizi yönüne duyarlı 
+olmasını isteriz. Ancak diğer zamanlarda, tüm faktörlerin verilerimizin 
+yalnızca tek bir yönüne duyarlı olmasını tercih edebiliriz.
+
+---
+## Örnek Veri için Korelasyon Matrisi
+- AFA’da analiz  edilen  **ilişkiler matrisidir. **
+- Örnek veri için $R_{11 x 11}$ korelasyon matrisi aşağıdaki gibidir
+
+```{r comment=NA}
+library(haven)
+AFA <- read_sav("data/AFA.sav")
+matris <- round(cor(AFA[,-c(1,13)]),2)
+matris[upper.tri(matris)] <- NA
+matris
+```
+
+
+<!-- Herhangi bir rotasyondan  -->
+<!-- önceki çözüm uygulanır -->
+
+<!-- Çıkarılan faktörlere  -->
+<!-- dayanarak üretilen  -->
+<!-- korelasyon matrisi istenir -->
+
+<!-- Gözlenen  -->
+<!-- korelasyon matrisi  -->
+<!-- istenir -->
+
+<!-- Gözlenen korelasyon  -->
+<!-- matrisinin köşegen matris  -->
+<!-- olup olmadığı incelenir -->
+
+<!-- SPSS’te default seçeneği  -->
+<!-- PCA’dir. AFA analizi yaparken  -->
+<!-- bu seçeneği geçersiz  -->
+<!-- kıldığınızdan emin olun. -->
+
+<!-- Korelasyon matrisi  -->
+<!-- analiz edilecek default  -->
+<!-- matrisidir -->
+
+<!-- 1’den büyük olan eigenvalue  -->
+<!-- sayısı çıkarılacak faktör sayısını  -->
+<!-- belirler. 1 değeri geçersiz  -->
+<!-- kılınabilir. -->
+
+<!-- Default olarak maksimum  -->
+<!-- iterasyon sayısı 25’tir. 25  -->
+<!-- iterasyondan sonra yakınsanma  -->
+<!-- olmazsa bu değeri değiştiriniz. -->
+
+<!-- Analizden çıkarılacak  -->
+<!-- faktör sayısına karar  -->
+<!-- vermede sıklıkla kullanılan  -->
+<!-- ikinci kuraldır. Bu seçeneği  -->
+<!-- grafik elde etmek için  -->
+<!-- işaretleyiniz.  -->
+
+<!-- İlk olarak  -->
+<!-- rotasyonsuz AFA  -->
+<!-- analizi gerçekleştirilir. -->
+
+<!-- Faktörlere karşılık gelen  -->
+<!-- yüklerin örüntüsünü  -->
+<!-- grafikte görmek için yük  -->
+<!-- grafiği istenir. -->
+
+
+---
+## KMO
+.pull-left[
+- AFA'da bir grup ölçülen değişkenden ortak faktör çıkarılması hedeflenmektedir. Bu nedenle değişkenler bazı ortak şeyler paylaşmalıdır. Eğer bu **11 değişkenin altında yatan hiçbir ortak faktör yoksa evren korelasyon matrisi 11x11 boyutunda bir birim** matris olacaktır
+]
+.pull-right[
+.small[
+
+
+$$\begin{bmatrix}{}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+\end{bmatrix}$$
+]
+]
+
+---
+## KMO
+
+- Bütün **değişkenler birbirinden bağımsız olduğunda**, veri 
+indirgeme başarılamaz.
+
+- Kaiser-Meyer-Olkin measure of sampling adequacy (KMO) **değişkenler arasındaki örtüşmenin derecesini** 
+inceler.
+
+- Daha çok değişken ortak şeyler paylaşırsa, KMO değeri daha büyük olacaktır. 
+
+- Bu nedenle **KMO değerinin büyük olması** beklenir. 
+
+---
+## KMO
+```{r}
+library(psych)
+veri <- AFA[ ,-c(1,13)]
+KMO(veri)
+
+```
+
+KMO değeri istatistiksel bir testle birlikte gelmez.
+- Yeterliliğin değerlendirilmesi biraz kişiseldir.
+- Araştırmacılar **KMO değerinin ideal olarak 0,6’dan büyük olması** 
+gerektiğini önerirler.
+- Örneğe **0,6 kuralı uygulanırsa, korelasyon matrisinin evrendeki bir birim matrisinden farklı olduğu** söylenebilir.
+
+
+---
+## KMO
+
+- **KMO()** fonksiyonunun çıktısı incelendiğinde, **hem tüm veri** için (Overall MSA) **hem de her bir madde** için (MSA for each item) KMO değeri görülmektedir. 
+
+- Çalışmalarda genellikle sadece tüm veri için elde edilen KMO değeri raporlanır. Madde bazında KMO değeri ise **belirli bir maddenin testin tamamından** farklı olup olmadığına ilişkin bilgi verebilir.
+
+```{r}
+KMO(veri)
+
+```
+
+---
+## KMO
+Veri seti iki kategorik ise **KMO** aşağıdaki şekilde hesaplanabilir. 
+
+```{r eval=FALSE}
+kor_mat <- tetrachoric(veri)$rho
+KMO(kor_mat)
+
+```
+
+---
+## Bartlett’in Testi
+
+- Korelasyon matrisinin **bir birim matrisi** (sıfır hipotezi) olup olmadığını test etmenin bir diğer yolu “Bartlett’s Test of Sphericity” olarak adlandırılır. 
+
+- Yaklaşık olarak bir ki-kare dağılımını izleyen istatistiksel bir testle birlikte gelir.
+
+- Sıfır hipotezinin reddedilmesi beklenir.
+```{r}
+bartlett.test(AFA)
+```
+
+- Burada **sıfır hipotezi  reddedilir.** AFA analizi  devam edebilir.
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+
+- AFA'da kritik kararlardan biri, kaç faktörün çıkarılacağını belirlemektir. Bu kararı vermek için çok sayıda yaklaşım vardır. Bu yaklaşımlardan bazıları şunlardır:
+
+  - İstatistiksel anlamlılık testleri
+  - Özdeğerin 1,0’dan büyük olması kuralı
+  - Yamaç birikinti grafiği (scree plot)
+  - Artık korelasyon matrisinin incelenmesi
+  - Paralel analiz
+
+- Genel olarak, bu kararı almak için farklı yaklaşımların 
+birbirini destekleyeceği umuduyla birkaç yaklaşım 
+kullanılmalıdır.
+
+---
+## Çıkarılacak Faktörlerin Sayısı 
+**İstatistiksel Anlamlılık Testleri**
+
+- Bartlett'e (1950) bağlı istatistiksel anlamlılık testleri, korelasyon matrisinin matrisin bir birim matrisi olup olmadığını test etmek için kullanılabilir. 
+
+- Korelasyon matrisinin bir birim matrisi olduğuna ilişkin **sıfır hipotezi reddedilemezse, faktörler matristen makul bir şekilde çıkarılamaz. **
+
+- Bu uygulamadaki sorun, tüm istatistiksel anlamlılık testlerinde karşılaşılan genel sorundur. İstatistiksel anlamlılık, büyük ölçüde **örneklem büyüklüğüne bağlıdır**. Araştırmacılar genellikle AFA'yı
+yalnızca makul ölçüde büyük örneklemlerle kullandıklarından, 
+**önemsiz korelasyonlar veya faktörler bile istatistiksel olarak** önemli olarak değerlendirilecektir. Bu nedenle, bu yaklaşım çok 
+**kullanışlı değildir.**
+
+
+---
+## Çıkarılacak Faktörlerin Sayısı 
+**Özdeğerin 1,0’dan Büyük Olması Kuralı**
+
+- Guttman (1954), kayda değer faktörlerin **özdeğerlerinin
+1,0'dan büyük olması** gerektiğini düşünmüştür. 
+
+- Bazen bu  mantık Kaiser'e atfedilir ve **K1** kuralı olarak adlandırılır.
+
+- Faktörler, tanım gereği, **gözlenen değişkenlerin toplamları olarak oluşturulan gizli yapılardır ve bu nedenle birden fazla gözlenen değişkenden oluşmalıdır.**
+
+---
+## Çıkarılacak Faktörlerin Sayısı 
+**Özdeğerin 1,0’dan Büyük Olması Kuralı**
+
+- Bir faktör tek bir gözlenen değişkenden 
+oluşuyorsa, gözlenen değişkenin örüntü/yapı katsayısı **1,0 (veya -1,0)** olsa ve bu faktördeki diğer tüm değişkenler **0** örüntü/yapı 
+katsayılarına sahip olsa, faktörün özdeğeri **1,0** olacaktır. 
+
+- Dolayısıyla kayda değer faktörlerin (gözlenen değişkenlerin toplamlarını temsil eden yapıların) **öz değerlerinin **1,0'dan** büyük olması beklenmektedir.**
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+------
+.xsmall[- Guttman, L. (1954). Some necessary conditions for common-factor analysis. 
+Psychometrika,19, 149-161.]
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+**Özdeğerin 1,0’dan Büyük Olması Kuralı**
+
+- Özdeğerler, tüm örnek istatistikler gibi, bazı örnekleme hatalarına sahiptir. Bu nedenle bir araştırmacı kuram ve önceki ilgili AFA araştırmalarına dayanarak, **özdeğeri ,999 veya ,950 olan bir faktörü çıkarabilir** veya **özdeğeri 1,005 veya 1,100 olan bir faktörü tutmayabilir.**
+
+- Bu kural çoğu istatistiksel paketteki faktörlerin sayısını belirlemek için varsayılan karar verme stratejisidir. 
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+**Özdeğerin 1,0’dan Büyük Olması Kuralı**
+
+
+```{r}
+ fa(veri)$e.values
+ sum(fa(veri)$e.values)
+
+```
+
+
+-  korelasyon matrisi için  özdeğerleri rapor eder. Büyükten küçüğe sıralanan 11 özdeğer vardır. 
+
+- Bu özdeğerlerin toplamı 11’e **ölçülen değişkenlerin sayısına**
+eşittir. 
+
+$6.078 + 1.521 + 1.154 + … + 0.168 + 0.099 = 11$
+
+---
+### Çıkarılacak Faktörlerin Sayısı
+**Özdeğerin 1,0’dan Büyük Olması Kuralı**
+
+```{r}
+ fa(veri)$e.values
+
+```
+
+- İlk üç özdeğer 1’den büyüktür: 6,078, 1,521 ve 1,154.
+
+- **K1** kuralına göre **AFA’dan 3 faktör** çıkarılacaktır
+
+---
+### Çıkarılacak Faktörlerin Sayısı
+**Özdeğerin 1,0’dan Büyük Olması Kuralı**
+
+- 3 faktör çıkarma işlemi
+```{r}
+out <- fa(veri, nfactors = 3,fm="pa",rotate="none")
+out
+```
+
+---
+## psych fa() 
+
+```{r echo=FALSE, fig.align='center',out.width="75%"}
+knitr::include_graphics("img/AFA_2.PNG")
+```
+
+---
+### Çıkarılacak Faktörlerin Sayısı
+**Yamaç Birikinti Grafiği**
+
+- Cattell (1966), faktörlerin sayısını belirlemek için **grafiksel bir test önermiştir. **
+
+- Cattell yöntemini dağ döküntüsü (scree) kavramına 
+dayandırmıştır. Dağ döküntüsü, dağların eteklerinde 
+toplanan, dağlara sağlam bir şekilde bağlanmamış 
+gevşek kaya ve kaya parçalarının döküntüsüdür.
+<br>
+<br>
+<br>
+
+<br>
+
+
+
+-----
+.xsmall[Cattell, R. B. (1966). The scree test for the number of factors. Multivariate Behavioral
+Research, 1, 245-276.]
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+
+- Cattell büyük, sağlam, bozulmamış dağların; araştırmacıların tanıması ve tutması gereken sağlam, kayda değer faktörlere benzer olduğunu düşünmüştür. Bununla birlikte, önemsiz faktörler, dağ döküntüsü ile benzerdir ve önemsiz faktörlerin 
+faktör çıkarma sürecinde geride bırakılması gerekir. 
+
+- Bir **yamaç birikinti grafiğinde**, yatay eksende özdeğer veya faktör sayıları ile dikey eksende özdeğer büyüklüklerinin grafiği çizilir. 
+
+- Özdeğerler grafikte işaretlenir ve ardışık değerler bir çizgiyle bağlanır. Faktör çıkarma, bir "dirsek" bulunan noktada veya grafiğin düzleştiği noktada durdurulmalıdır. 
+
+- İstatistiksel anlam içermeyen bu görsel yaklaşıma bazen "kalem testi" denir, çünkü dirseğin veya düzleşmenin nerede oluştuğunu belirlemek için ilgili grafiğin en sağ kısmına bir kalem yerleştirilebilir.
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+
+```{r}
+scree(veri)
+```
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+**Artık Korelasyon Matrisinin İncelenmesi**
+
+- Daha fazla faktör çıkarıldıkça, **artık korelasyon 
+matrisindeki girdiler sıfıra yaklaşır.** Tüm olası faktörler
+çıkarılırsa, **artık matris her zaman yalnızca sıfırlardan 
+oluşacaktır.**
+
+- Dolayısıyla, kayda değer faktörlerin sayısını belirlemeye 
+yönelik diğer bir yaklaşım, ardışık faktörler çıkarılırken 
+**artık matrisin incelenmesini** içerir. 
+
+- Yazılımlar talep üzerine artık matrisi sağlar. Ve bazı paketler artık 
+matrisin bir üçgeninde **|0.05|'den büyük olan girdilerin 
+sayısını verir. **
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+Artık Korelasyon Matrisinin İncelenmesi
+
+```{r comment=""}
+(residuals <-round(out$residual,2))
+```
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+
+Artık Korelasyon Matrisinin İncelenmesi
+
+```{r}
+sum(abs(residuals[lower.tri(residuals)])>0.05)
+
+```
+
+- İdeal olarak artıkların değeri mümkün olduğunca sıfıra yakın olmalıdır. 
+
+- mutlak değeri ,05’ten büyük olan artıkların sayısını ve yüzdesini verir. 
+
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+**Paralel Analiz**
+
+- Horn (1965), kaç faktörün çıkarılacağına karar vermek için **paralel analiz** adı verilen bir yaklaşım önermiştir. 
+
+- Paralel analiz veriden çıkarılacak faktör sayısının belirlenmesinde kullanılan, Monte Carlo simülasyonuna dayalı bir yöntemdir.
+
+- Paralel analiz veride herhangi bir baskın faktör olmasa bile **örnekleme hatasının birden büyük öz değerlere neden olabileceği ** bilgisini temel alır.
+
+---
+## Çıkarılacak Faktörlerin Sayısı
+**Paralel Analiz**
+
+- Veri ile aynı madde sayısı ve örneklem büyüklüğüne sahip rastgele matrislerden öz değerler elde edilir ve bu değerler veriden elde edilen değerlerle karşılaştırılır. 
+
+- Faktör ya da bileşen sayısı, **rastgele örneklemlerden elde edilen öz değerlerden büyük olan öz değer sayısına** göre belirlenir (Franklin vd. 1995).
+
+---
+## Paralel Analiz
+.pull-left-narrow[
+```{r}
+library(nFactors) 
+PA<-nScree( x=out$e.values, 
+aparallel=NULL,
+cor=TRUE, 
+model="factors", 
+criteria=NULL) 
+PA$Components
+```
+]
+.pull-right-wide[
+```{r}
+plotnScree(PA, legend=TRUE, 
+ylab="Ozdegerler", main="Faktor Cozumu")
+```
+
+]
+
+---
+## **Paralel Analiz**
+
+
+- Paralel analizde, **gerçek verilerden ve rastgele sıralı verilerden ardışık çiftlerdeki özdeğerler karşılaştırılır.** 
+
+- Belirli bir faktör için **gerçek verilerin özdeğeri, rastgele sıralı veriler için ilgili faktörün 
+özdeğerini aştığında faktörler korunur. **
+
+
+
+---
+## Örüntü Katsayıları 
+(Pattern Coefficients) 
+
+- AFA modeli aşağıdaki gibidir.
+
+$X=\Lambda\xi +\delta$
+
+- $\Lambda$ (lambda) matrisindeki katsayılara **örüntü katsayıları** adı verilir (DFA’daki faktör yüklerine ve çoklu regresyondaki eğim katsayılarına benzerler).
+
+- Örüntü katsayıları ölçülen değişkendeki puanları elde 
+etmek için **faktöre uygulanan ağırlıklardır.** 
+
+- Her bir faktörün **her bir ölçülen değişkendeki bireysel 
+(unique) katkısını** temsil ederler.
+
+---
+## Örüntü Katsayıları 
+.pull-left-narrow[
+```{r}
+out <- fa(veri,3,fm="pa",
+rotate="none")
+out$loadings[,1:3]
+```
+]
+.pull-right-wide[
+- Bu tablo çıkarılan 3 faktör için örüntü katsayılarını 
+listeler. 
+
+- Bu tabloya dayanarak her bir değişken için eşitlik 
+yazılabilir:
+
+.small[
+$X=\Lambda\xi +\delta$
+
+$per1= .80\xi_1 + (-0.45)\xi_2 + (-0.38)\xi_3  + \delta_1$
+$per2= .78\xi_1 + (-0.32)\xi_2 + (-0.21)\xi_3 + \delta_2$
+<br>
+...  
+.... 
+.... 
+<br>
+$per11= .67\xi_1 + (-0.14)\xi_2 + 0.44\xi_3 + \delta_3$
+]
+]
+
+
+---
+## Örüntü Katsayıları 
+(Pattern Coefficients)
+
+- Faktörler birbirinden bağımsız 
+olduğundan, örüntü katsayısının karesi,
+örneğin,
+
+$\lambda^2_{11} = .80^2 = .64$
+değeri PER1 değişkenindeki varyansın yaklaşık **%64,6’**sının birinci faktör tarafından açıklandığını önerir. 
+
+$\lambda^2_{12} = -0.45^2 = .20$ değeri PER1 değişkenindeki varyansın yaklaşık **%20’**sının ikinci faktör tarafından açıklandığını önerir.
+
+$\lambda^2_{13} = -0.38^2 = .14$ değeri PER1 değişkenindeki varyansın yaklaşık **%14’**ünün ikinci faktör tarafından açıklandığını önerir.
+
+- Diğer örüntü katsayıları için de benzer açıklamalar yapılır.
+
+---
+## Ortak varyans Katsayıları 
+(Communality Coefficients) 
+
+- Örüntü katsayıları **ortak varyans katsayı** ile yakından ilgilidir. Ortak varyans katsayısı $h^2$ ile gösterilir.
+
+- Ortak varyans bir ölçülen değişkendeki varyansın ne kadarını **bir grup olarak faktörlerin üretebileceğini** belirtir.
+
+- Ortak varyans katsayısı DFA veya çoklu regresyondaki $R^2$ değerine benzer şekilde açıklanabilir.
+
+---
+## Ortak varyans Katsayıları 
+(Communality Coefficients) 
+
+- Her bir gösterge için, ortak varyans katsayısı örüntü katsayılarının kareleri toplanarak hesaplanır.
+- Örneğin, PER1 değişkeni için:
+
+$\lambda^2_{11} + \lambda^2_{12} +\lambda^2_{13} = .80^2 + (-0.45)^2 + (-0.38)^2 = .99$
+
+- Bu değer, toplamda PER1 değişkenindeki varyansın yaklaşık  **%99**’unun çıkarılan **3 faktör tarafından açıklanacağını** önerir. 
+
+---
+## Örüntü Katsayıları ve Ortak Varyanslar 
+
+Her bir değişken için ortak varyans 
+hesaplanabilir:Örneğin per 11 için
+
+.small[
+$\lambda^2_{11} + \lambda^2_{12} +\lambda^2_{13} = .67^2 + (-0.14)^2 + (-0.44)^2 = .67$
+]
+
+
+```{r}
+  out
+```
+
+---
+## Ortak varyans Katsayıları 
+(Communality Coefficients) 
+- Ortak varyans katsayısı **0 ile 1** arasında bir değer alır. 
+
+- İyi bir AFA modelinde, **ortak varyans katsayılarının 
+hepsinin oldukça yüksek** (1’e mümkün olduğunca yakın) 
+olması beklenir.
+
+- Örneğin, PER1 için, varyansın yaklaşık **%99’u 3 faktör tarafından açıklanır.** 
+
+- PER1 için, varyansın yaklaşık **%1’i 3 faktör tarafından 
+açıklanmaz.**
+
+- %1 değeri PER1 maddesinin güvenilir olmayan kısmını belirtir. 
+
+- Bazı alışılmadık durumlarda, **%100’den büyük ortak **
+varyans katsayıları ile karşılaşmak mümkündür.  Bu durumlar **uygun olmayan çözümler** olarak adlandırılır.
+
+---
+## Yüklerin Kareleri Toplamı 
+
+- Her bir faktör için, örüntü katsayılarının karesi toplanarak yüklerin kareleri toplamı hesaplanır. 
+- Birinci faktör için:
+```{r}
+sum(out$loadings[,1]^2)
+```
+- Bu değer **11 değişkendeki toplam 
+varyansın birinci faktör tarafından 
+açıklanan miktarıdır.**
+
+- İkinci ve üçüncü faktörler için
+```{r}
+c(sum(out$loadings[,2]^2),sum(out$loadings[,3]^2))
+```
+
+---
+## Açıklanan Toplam Varyansın Yüzdesi
+
+- Her bir faktör için hesaplanan **yüklerin karelerinin 
+toplamının ölçülen değişkenlerin sayısına bölünmesiyle 
+elde edilen değer**, her bir faktör tarafından açıklanan 
+varyans yüzdesini verir. 
+
+- Örneğin, birinci faktör için elde edilen $5.814/11 = 52.85$ değeri 11 değişkendeki toplam varyansın yaklaşık  % $52.85$’inin birinci faktör tarafından açıklandığını önerir.
+
+---
+## Açıklanan Toplam Varyansın Yüzdesi
+
+ İkici ve üçüncü faktör tarafından açıklanan varyans 
+yüzdeleri de benzer şekilde hesaplanır.
+- Böylece 3 faktör varyansların sırasıyla yaklaşık
+$52.86$, $11.57$ ve $7.81$’ini açıklar.
+
+```{r}
+out$Vaccounted
+```
+
+Eğer bu 3 faktör çıkarılmaya karar verilirse, 3 faktörün 11 değişkendeki varyansın toplamda yaklaşık **%72,23'ünü**
+açıkladığı sonucuna varılabilir
+
+---
+## Üretilen ve Artık Korelasyon Matrisleri
+
+Üretilen korelasyon matrisinin köşegenindeki 
+öğeler çıkarılan ortak varyanslardır.
+
+```{r}
+factor.model(out$loadings)
+```
+
+---
+## Üretilen ve Artık Korelasyon Matrisleri
+
+Üretilen korelasyon matrisinin köşegenindeki 
+öğeler çıkarılan ortak varyanslardır.
+
+```{r}
+rep_matrix <- factor.model(out$loadings)
+diag(rep_matrix)==out$communality
+```
+
+
+---
+
+.hand[bitti]
