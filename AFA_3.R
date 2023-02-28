@@ -22,21 +22,7 @@ text(zz.coords$x,
      cex = 1.5, 
      pos = 4) 
 
-knitr::include_graphics("img/AFA_3.PNG")
 
-knitr::include_graphics("img/AFA_3.PNG")
-
-knitr::include_graphics("img/AFA_3_1.PNG")
-
-knitr::include_graphics("img/AFA_4.PNG")
-
-knitr::include_graphics("img/AFA_5.PNG")
-
-knitr::include_graphics("img/AFA_6.PNG")
-
-knitr::include_graphics("img/AFA_8.PNG")
-
-knitr::include_graphics("img/AFA_9.PNG")
 
 out_dik <- fa(veri,3,fm="pa",rotate="varimax")
 
@@ -72,9 +58,7 @@ text(zz.coords$x,
 
 print(out_dik$loadings[2:3,], digits = 3, cutoff = 0.30)
 
-knitr::include_graphics("img/AFA_10.PNG")
 
-knitr::include_graphics("img/AFA_11.PNG")
 
 out_egik <- fa(veri,3,fm="pa",rotate="oblimin")
 
@@ -113,7 +97,6 @@ text(zz.coords$x,
      cex = 1.5, 
      pos = 4) 
 
-knitr::include_graphics("img/AFA_12.PNG")
 
 fa_egik <- fa(veri, nfactors=3, rotate="oblimin", scores="regression")
 head(fa_egik$scores)
