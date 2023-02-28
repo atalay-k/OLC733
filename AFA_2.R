@@ -6,7 +6,6 @@ library(emo)
 library(knitr)
 
 
-knitr::include_graphics("img/AFA_1.PNG")
 
 library(haven)
 AFA <- read_sav("data/AFA.sav")
