@@ -1,9 +1,4 @@
-knitr::opts_chunk$set(
-	echo = TRUE,
-	message = FALSE,
-	warning = FALSE
-)
-options(digits=3)
+
 library(dplyr)
 library(QuantPsyc)
 library(knitr)
@@ -12,9 +7,7 @@ library(tuev)
 library(emo)
 
 
-knitr::include_graphics("CR_1.PNG")
 
-knitr::include_graphics("CR_2.PNG")
 
 library(haven)
 performans <- read_sav("Performans.sav")
@@ -31,7 +24,6 @@ cor_3 <- cor.test(~ Motivasyon + Kaygi , data = performans)
 broom::tidy(cor_3)[,c(1,3)]
 
 
-knitr::include_graphics("CR_3.PNG")
 
 library(broom)
 model <- lm(Performans ~ Motivasyon + Kaygi,
