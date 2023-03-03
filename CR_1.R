@@ -1,9 +1,4 @@
-knitr::opts_chunk$set(
-	echo = TRUE,
-	message = FALSE,
-	warning = FALSE
-)
-options(digits=3)
+
 library(dplyr)
 library(QuantPsyc)
 library(knitr)
