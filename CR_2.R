@@ -148,7 +148,6 @@ ols_plot_dffits(model)
 
 ols_plot_resid_lev(model)
 
-knitr::include_graphics("CR_4.PNG")
 
 influence.measures(model, infl = influence(model))
 
