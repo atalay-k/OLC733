@@ -1,3 +1,13 @@
+knitr::opts_chunk$set(cache=TRUE)
+knitr::opts_chunk$set(fig.path='figs/')
+knitr::opts_chunk$set(cache.path='cache/')
+
+knitr::opts_chunk$set(
+  fig.process = function(x) {
+    x2 = sub('-\\d+([.][a-z]+)$', '\\1', x)
+    if (file.rename(x, x2)) x2 else x
+  }
+)
 library(tidyverse)
 library(stevemisc)
 library(knitr)
@@ -53,13 +63,6 @@ ggplot(screen) +aes(x = timedrs)  +
 
 timedrs_plt
 
-library(ggplot2)
-timedrs_plt <- 
-timedrs_plt +
-geom_density(fill = "#0c4c8a",alpha = 0.5)
-
-timedrs_plt
-
 library(plotly)
 timedrs_plt <- 
 plot_ly(x = screen$timedrs, 
@@ -95,11 +98,9 @@ ggplot(screen, aes(y = timedrs)) +
 
 timedrs_plt
 
-boxplot.stats(screen$timedrs)$out
-out <- boxplot.stats(screen$timedrs)$out
-out
-out_ind <- which(screen$timedrs %in% c(out))
-out_ind
+(out <- boxplot.stats(screen$timedrs)$out)
+
+(out_ind <- which(screen$timedrs %in% c(out)))
 
 
 library(plotly)
