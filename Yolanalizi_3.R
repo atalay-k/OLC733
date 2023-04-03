@@ -1,5 +1,9 @@
-
-options(digits=3)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+options(digits=5)
 library(dplyr)
 library(tidyverse)
 library(dplyr)
@@ -45,12 +49,20 @@ modindices(yol_fit, sort = TRUE)
 ## modindices(yol_fit, sort = TRUE, maximum.number = 5)
 
 
+library(lavaan)
+yol_model <-  
+'stres     ~ egzersiz + dayaniklilik
+ hastalik  ~ egzersiz + dayaniklilik + form + stres
+ form      ~ egzersiz + dayaniklilik
+ egzersiz ~~ dayaniklilik'
+yol_fit <- sem(yol_model, veri)
+
 yol_model_v1 <- 
 'stres     ~ egzersiz + dayaniklilik
-hastalik  ~ egzersiz + dayaniklilik + form + stres
-form      ~ egzersiz + dayaniklilik
-stres     ~ form
-egzersiz ~~ dayaniklilik' 
+ hastalik  ~ egzersiz + dayaniklilik + form + stres
+ form      ~ egzersiz + dayaniklilik
+ stres     ~ form
+ egzersiz ~~ dayaniklilik' 
 yol_fit_v1 <- sem(yol_model_v1, veri)
 
 
@@ -70,18 +82,24 @@ edge.label.cex = 1.8,
 pastel=TRUE,
 nCharNodes = 0, nCharEdges = 0)
 
-fitmeasures(yol_fit_v1,fit.measures=c("chisq","p","df"))
+ lavInspect(yol_fit, what = "resid")
+
+ lavInspect(yol_fit_v1, what = "resid")
+
+fitmeasures(yol_fit_v1,fit.measures=c("chisq","p","df","cfi","rmsea","srmr"))
 
 
 ## p_pa <-
-## semPaths(yol_fit_v1, whatLabels = "est",
+## semPaths(yol_fit_v1,
+## whatLabels = "est",
 ## sizeMan = 10,
 ## edge.label.cex = 1.15,
-## style = "ram",layout = "spring" ,
-## nCharNodes = 0, nCharEdges = 0)
-## p_pa_2 <- semptools::mark_sig(p_pa, yol_fit_v1)
-## plot(p_pa_2)
-## 
+## style = "ram",
+## layout = "spring" ,
+## nCharNodes = 0,
+## nCharEdges = 0)
+## semptools::mark_sig(p_pa,
+##           yol_fit_v1)
 
 p_pa <- 
 semPaths(yol_fit_v1, whatLabels = "est",
@@ -89,9 +107,10 @@ sizeMan = 10,
 edge.label.cex = 1.15,
 style = "ram",layout = "spring" ,
 nCharNodes = 0, nCharEdges = 0)
+semptools::mark_sig(p_pa, yol_fit_v1)
 p_pa_2 <- semptools::mark_sig(p_pa, yol_fit_v1)
-plot(p_pa_2)
 
+plot(p_pa_2)
 
 
 yol_model_v1 <- 
@@ -143,7 +162,7 @@ library(knitr)
 parameterEstimates(yol_fit, standardized=TRUE) %>% 
   filter(op == "~") %>% 
   select('Bağımlı Değişkenler'=lhs, Gosterge=rhs, B=est, SE=se, Z=z, 'p-value'=pvalue, Beta=std.all) %>% 
-  knitr::kable(digits = 3, booktabs=TRUE, format="markdown", caption="Factor Loadings")
+  knitr::kable(digits = 3, booktabs=TRUE, format="markdown", caption="Faktör Yükleri")
 
 # devtools::install_github("dr-JT/semoutput")
 library(semoutput)

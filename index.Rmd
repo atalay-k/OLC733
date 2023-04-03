@@ -2,7 +2,7 @@
 title: "OLC 733" 
 subtitle: "R İLE ÇOK DEĞİŞKENLİ İSTATİSTİK ve PSİKOMETRİ"
 author: "Kübra Atalay Kabasakal"
-date: "Bahar 2023`"
+date: "Bahar 2023"
 output: 
   html_document:
     toc: true
@@ -36,10 +36,23 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
+##  Kaynaklar
+ 
+
+- Kline,R. B. (2019). Yapısal Eşitlik Modellemesinin İlkeleri ve Uygulaması(4. Baskı). (S. Şen, Çev.)
+Ankara: Nobel Yayınevi.
+
+
+- Şen, S. (2020). Mplus ile Yapısal Eşitlik Modellemesi Uygulamaları (2020).Nobel Yayınevi.
+
+- Wolf, E. J., Harrington, K. M., Clark, S. L., & Miller, M. W. (2013). Sample Size Requirements for Structural Equation Models: An Evaluation of Power, Bias, and Solution Propriety. Educational and Psychological Measurement, 73(6), 913–934. https://doi.org/10.1177/0013164413495237
+
 ## Değerlendirme
 
 - Dönem içi değerlendirmeler haftalık yapılacaktır. İkinci hafta itibari ile ders 
 başlangıç saatinde moodlede bir önceki haftanın konularından tek soruluk bir mini sınav bulunacaktır. Bu sınava ilişkin cevabı 20 dakika içinde moodle yüklemeniz beklenecektir.
+
+
 
 
 
@@ -61,23 +74,46 @@ startdate <- as.Date("2023-02-27")
   - Veri dönüştürme
   - Çoklu Bağlantı (Multicollinearity) ve Tekillik (Singularity)
 
-## Hafta 2 7 Mart: Açımlayıcı Faktör Analizi
-- Temel Kavramlar
+    - `r emo::ji('link')`[Kullanılan veri SCREEN.sav](SCREEN.sav)
+
+
+## Hafta 2  7 Mart : Çoklu Regresyon
+
+- Basit Doğrusal Regresyon - `r emo::ji("press")`[sunu](CR_1.pdf) - `r emo::ji("software")`[R](CR_1.R)
+- Çoklu Regresyon - `r emo::ji("press")`[sunu](CR_2.pdf) - `r emo::ji("software")`[R](CR_2.R)
+- Bir Örnek - `r emo::ji("press")`[sunu](CR_3.pdf) - `r emo::ji("software")`[R](CR_3.R)
+
+    - `r emo::ji('link')`[Kullanılan veri Performans.sav](Performans.sav)
+    - `r emo::ji('link')`[Kullanılan veri Performand1.sav](Performansd1.sav)
+    - `r emo::ji('link')`[Kullanılan veri Hassles.sav](Hassles.sav)
+
+
+## Hafta 4  21 Mart : Yol Analizi- I
+
+- Yol Analizi Modeli[sunu](Yolanalizi_1.pdf) - `r emo::ji("software")`[R](Yolanalizi_1.R)
+-  Modeli Tanımlama [sunu](Yolanalizi_2.pdf) - `r emo::ji("software")`[R](Yolanalizi_2.R)
+-  Model Veri Uyumu [sunu](Yolanalizi_3.pdf) - `r emo::ji("software")`[R](Yolanalizi_3.R)
+
+`r emo::ji('link')`[Kullanılan veri illness.dat](illness.dat)
+
+
+## Hafta 5  28 Mart: Açımlayıcı Faktör Analizi
+- Temel Kavramlar [sunu](AFA_1.pdf) - `r emo::ji("software")`[R](AFA_1.R)
   - Örüntü Katsayısı
   - Yapı Katsayısı
   - Ortak Varyans Katsayısı
   - Özdeğerler
   - Örneklem Büyüklüğü
-- Bir Örnek
+- Bir Örnek [sunu](AFA_2.pdf) - `r emo::ji("software")`[R](AFA_2.R)
   - KMO ve Barlet Testi
   - Paralel Analiz ve Faktör Sayısı
   - Örüntü Katsayaıları
-- Döndürme ve Faktör Yorumları
-        
-## Hafta 3 14 Mart Yol Analizi- I
+- Döndürme ve Faktör Yorumları [sunu](AFA_3.pdf) - `r emo::ji("software")`[R](AFA_3.R)
 
-### Hafta 4  21 Mart : Yol Analizi- I
-### Hafta 5  28 Mart : Doğrulayıcı Faktör Analizi
+`r emo::ji('link')`[Kullanılan veri AFA.sav](AFA.sav)
+
+
+
 ### Hafta 6  4 Nisan: Doğrulayıcı Faktör Analizi
 ### Hafta 7  11 Nisan : Klasik Test Kuramı
 ### Hafta 8  18 Nisan : Klasik Test Kuramına Dayalı DMF Analizleri

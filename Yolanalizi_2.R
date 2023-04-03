@@ -1,4 +1,8 @@
-
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
 options(digits=3)
 library(dplyr)
 library(tidyverse)
@@ -37,6 +41,12 @@ semPaths(yol_fit,rotation=2, curvePivot = TRUE,
            pastel=TRUE,
            nCharNodes = 0, nCharEdges = 0)
 
+
+lavInspect(yol_fit, what = "sampstat")
+
+lavInspect(yol_fit, what = "implied")
+
+ lavInspect(yol_fit, what = "resid")
 
 knitr::include_graphics("PA_1.PNG")
 
