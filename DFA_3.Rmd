@@ -1,0 +1,403 @@
+---
+title: "`r emo::ji('chart')` Doğrulayıcı Faktör Analizi"
+subtitle: "<br> `r emo::ji('graph')`  Ölçme Değişmezliği"
+author: "Dr. Kubra Atalay Kabasakal"
+date: "Bahar 2023"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+---   </div>
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+## Veri Okuma ve Model
+
+```{r message=FALSE, warning=FALSE}
+library(openxlsx)
+yasamdoyum <- read.xlsx("yasamdoyum.xlsx")
+
+model_1_v1 <- 
+"okul =~ NA*okul1 + okul2 + okul3
+kisi =~ NA*kisi1 + kisi2
+arkadas =~ NA*arkadas1 + arkadas2
+aile =~ NA*aile1 + aile2 + aile3
+ kisi ~~ 1*kisi
+ arkadas ~~ 1*arkadas
+ aile ~~ 1*aile"
+```
+
+
+
+---
+## Ölçme Değişmezliği Modelleri
+
+- Belirli bir özelliğin **gruplar arasında karşılaştırılması yapılırken**, 
+söz konusu özelliği ölçmek üzere geliştirilen ölçme araçlarından alınan puanların **karşılaştırılabilir olması** için öncelikle **ölçme aracının gruplar arasında ölçme değişmezliğini** (measurement invariance) sağlanması gerekir.
+
+- Ölçme değişmezliği, **gizil değişkenler ve gözlenen değişkenler arasındaki ilişkinin gruplar
+arasında aynı olmasıdır.**
+
+
+---
+## Ölçme Değişmezliği Modelleri
+
+- Ölçme değişmezliği, **çoklu grup doğrulayıcı faktör analizi (ÇG-DFA) ** ile incelenebilir. Çoklu grup doğrulayıcı faktör analizinin temel amacı bir grup göstergenin farklı gruplarda aynı yapıyı ölçüp ölçmediğinin değerlendirilmesidir.
+
+- Bir ölçme aracı bir grupta diğer gruba göre faklı bir özelliği ölçüyorsa, **ölçme aracının yapı yanlılığına (construct bias) sahip olduğu söylenebilir. **
+
+- Yapı yanlılığı söz konusuysa, **grup üyeliği DFA modelindeki göstergeler ve faktörler arasındaki ilişkilere etki eder.**
+
+
+---
+## Ölçme Değişmezliği Modelleri
+
+1.  Şekil değişmezliği (configural invariance) modeli
+
+2.  Zayıf değişmezlik (weak invariance) modeli
+
+3.  Güçlü değişmezlik (strong invariance) modeli
+
+4.  Katı değişmezlik (strict invariance) modeli
+
+---
+
+- **Şekil değişmezliği (configural /pattern invariance)**
+
+  - Gruplar aynı genel faktör yapısına sahip mi?
+    -   en az kısıtlayıcı model
+    -   model veri ile uyumlu değilse, hiç bir temel düzeyde geçerli olmaz.
+
+---
+## Şekil Değişmezlik
+
+| Grup 1                                                  |   |Grup 2                                             |
+|---------------------------------------------------------|---|----------------------------------------------------|
+| $y_{11s} = \mu_{11} + \lambda_{11}F_{1s} + e_{11s}$  | |  $y_{12s} = \mu_{12} + \lambda_{12}F_{1s} + e_{12s}$  |
+| $y_{21s} = \mu_{21} + \lambda_{21}F_{1s} + e_{21s}$  | |  $y_{22s} = \mu_{22} + \lambda_{22}F_{1s} + e_{22s}$  |
+| $y_{31s} = \mu_{31} + \lambda_{31}F_{1s} + e_{31s}$  |  |  $y_{32s} = \mu_{32} + \lambda_{32}F_{1s} + e_{32s}$  |
+| $y_{41s} = \mu_{41} + \lambda_{41}F_{2s} + e_{41s}$  | |   $y_{42s} = \mu_{42} + \lambda_{42}F_{2s} + e_{42s}$  |
+| $y_{51s} = \mu_{51} + \lambda_{51}F_{2s} + e_{51s}$  | |   $y_{52s} = \mu_{52} + \lambda_{52}F_{2s} + e_{52s}$  |
+| $y_{61s} = \mu_{61} + \lambda_{61}F_{6s} + e_{61s}$  | |   $y_{62s} = \mu_{62} + \lambda_{62}F_{2s} + e_{62s}$  |
+
+-   Alt indislerin ilki madde, ikincisi grup için kullanılmıştır.
+
+    $$sd = 54 - (12\mu - 12\sigma^2_{e} - 12\lambda + 0\sigma^2_{F} + 2\sigma_{F_{12}} + 0K_{F}) = 16$$
+
+```{=tex}
+{factor kovaryansı hesaplanıyor ancak faktor ortalaması 0, 
+factor varyansı 1 olarak sabitlenmiştir.
+}
+```
+
+---
+- **Zayıf Değişmezlik (Metric/Weak factorial invariance)**
+
+  - Gruplar aynı faktör yüklerine sahip mi?
+
+    -   her bir göstergenin yükü (standartlaştırılmış katsayısı üzerinde gruplarda eşitlik kısıtı getirilir.
+    
+---
+
+- **Güçlü Değişmezlik (Strong/Scalar invariance)**
+
+  - Gruplar aynı gösterge sabitlerine sahip mi?
+    -   eşit standartlaştırılmış kesen değere sahip mi?
+
+- **Katı Değişmezlik**
+
+  - Gruplar aynı artık varyanslara sahip mi?
+
+---
+# Özet
+
+Ölçme Değişmezliği Hiyerarşik Modellerinde Serbest Tahminlenen ve Sabitlenen Parametreler [Gregorich, 2006]
+
+| Model | Değişmzelik Testi        | Kısıtlanan Parametre                     |
+|-------|--------------------------|------------------------------------------|
+| Sekil | Madde/Faktor grupları    |                                          |
+| Zayıf | +Faktor yukleri          | Faktör varyans ve kovaryansları          |
+| Guclu | +Madde Sabitleri         | Faktör ve gözlenen degisken ortalamaları |
+| Katı  | +Madde artık varyansları | Gozlenen varyans ve kovaryanslar         |
+
+---
+## Uygulama
+
+Özdeş faktör yapısını eş zamanlı test ediniz.
+
+```{r cfa3, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE,comment=""}
+library(lavaan)
+configural <- cfa(model_1_v1, data=yasamdoyum, group = "cinsiyet")
+
+fit <- c("chisq", "df", "pvalue","rmsea", "srmr","cfi")
+
+# bicimsel degimezlik
+fitmeasures(configural, fit.measures = fit)
+
+```
+
+---
+## Uygulama
+
+Faktör yüklerinin eşitliğini test ediniz.
+
+```{r message=FALSE, warning=FALSE}
+weak <- cfa(model_1_v1, data=yasamdoyum, group = "cinsiyet",
+group.equal=c("loadings"))
+
+# bicimsel degimezlik
+fitmeasures(configural, fit.measures = fit)
+
+# zayıf degimezlik
+fitmeasures(weak, fit.measures = fit)
+```
+
+---
+## Uygulama
+
+**Modeller arası uyumu degerlendirme**
+
+.xsmall[
+```{r }
+library(semoutput)
+sem_modelcomp(weak, configural)
+```
+]
+
+---
+## Uygulama
+
+**Gösterge sabitlerinin eşitliğini test ediniz.**
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, comment="", paged.print=FALSE}
+
+strong <-  cfa(model_1_v1, data=yasamdoyum,
+               group = "cinsiyet", 
+               group.equal=c("loadings","intercepts"))
+
+# zayıf degimezlik
+fitmeasures(weak,fit.measures = fit)
+
+# guclu degimezlik
+fitmeasures(strong,fit.measures = fit)
+
+```
+
+---
+## Uygulama
+
+**Modeller arası uyumu degerlendirme**
+
+.xsmall[
+
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, comment="", paged.print=FALSE}
+
+sem_modelcomp(strong, weak)
+
+```
+]
+
+---
+## Uygulama
+
+```{r message=FALSE, warning=FALSE,}
+library(semTools)
+measurementInvariance(model = model_1_v1, 
+                      data = yasamdoyum, 
+                      group = "cinsiyet")
+
+```
+
+
+
+---
+.hand[.teşekkürler]
+
+
+<!-- ```{r} -->
+<!-- library(readr) -->
+<!--  ian <- read_table2("ian.txt", col_names = FALSE)[,-7] -->
+<!--  summary(ian) -->
+<!--  colnames(ian) <- paste("Madde",1:6,sep="") -->
+
+<!--  library(lavaan) -->
+<!--  model_1 <- 'ian =~ Madde1 + Madde2 + Madde3 + Madde4 + Madde5 + Madde6' -->
+<!--  cfa_1 <- cfa(model_1,data= ian) -->
+
+<!--  library(semoutput) -->
+<!--  sem_descriptives(ian) -->
+
+<!-- sem_sig(cfa_1) -->
+<!-- sem_fitmeasures(cfa_1) -->
+<!-- summary(cfa_1) -->
+<!-- fitmeasures(cfa_1,c("srmr","tli")) -->
+<!-- fitmeasures(cfa_1) -->
+<!-- sem_factorloadings(cfa_1) -->
+<!-- sem_factorloadings(cfa_1, -->
+<!--   standardized = TRUE, -->
+<!--   ci = "standardized", -->
+<!--   ci.level = 0.95, -->
+<!--   digits = 3, -->
+<!--   print = TRUE -->
+<!-- ) -->
+<!-- library(semPlot) -->
+
+<!-- semPaths(cfa_1,what="std",style="ram",layout="tree",rotation =2) -->
+<!-- modindices(cfa_1, sort = TRUE) -->
+<!-- resid(cfa_1, type='normalized') -->
+
+
+<!-- summary(cfa_1, rsquare=TRUE) -->
+
+<!-- ``` -->
+
+
+
+<!-- ```{r} -->
+<!-- library(readr) -->
+<!--  ian <- read_table2("ian.txt", col_names = FALSE)[,-7] -->
+<!--  summary(ian) -->
+<!--  colnames(ian) <- paste("Madde",1:6,sep="") -->
+
+<!--  library(lavaan) -->
+<!--  model_2 <- 'ian =~ NA*Madde1 + Madde2 + Madde3 + Madde4 + Madde5 + Madde6 -->
+<!--  ian ~~ 1*ian' -->
+
+<!--  cfa_2 <- cfa(model_2,data= ian) -->
+<!-- sem_sig(cfa_2) -->
+<!-- sem_fitmeasures(cfa_2) -->
+
+<!-- semPaths(cfa_2,what="std",style="ram",layout="tree",rotation =2) -->
+
+<!-- ``` -->
+
+
+
+
+
+
+<!-- ```{r} -->
+<!-- library(readr) -->
+<!-- hafiza <- read_table2("hafiza.dat", col_names = FALSE) -->
+<!-- colnames(hafiza) <- paste("Madde",1:6,sep="") -->
+
+<!--  library(lavaan) -->
+<!--  model_3 <- 'gorsel =~ Madde1 + Madde2 + Madde3  -->
+<!--              metinsel =~         Madde4 + Madde5 + Madde6' -->
+
+<!--  cor(hafiza) -->
+<!-- cfa_3 <- cfa(model_3,data= hafiza) -->
+<!-- sem_sig(cfa_3) -->
+<!-- sem_fitmeasures(cfa_3) -->
+
+<!-- semPaths(cfa_3,what="std",style="ram",layout="tree",rotation =2) -->
+<!-- sem_factorloadings(cfa_3,standardized = FALSE) -->
+<!-- sem_factorloadings(cfa_3,standardized = TRUE) -->
+<!-- modindices(cfa_3, sort = TRUE) -->
+<!-- resid(cfa_3, type='normalized') -->
+
+
+<!-- summary(cfa_3, rsquare=TRUE) -->
+
+<!-- ``` -->
+
+
+
+
+
+<!-- ```{r} -->
+<!-- library(readr) -->
+<!-- hafiza <- read_table2("hafiza.dat", col_names = FALSE) -->
+<!-- colnames(hafiza) <- paste("Madde",1:6,sep="") -->
+
+<!--  library(lavaan) -->
+<!--  model_4 <- 'gorsel =~ Madde1 + Madde2 + Madde3  -->
+<!--              metinsel =~ Madde4 + Madde5 + Madde6    -->
+<!--              Madde2 ~~ Madde3' -->
+
+<!-- cfa_4 <- cfa(model_4,data= hafiza) -->
+<!-- sem_sig(cfa_4) -->
+<!-- sem_fitmeasures(cfa_4) -->
+
+<!-- semPaths(cfa_4,what="std",style="lisrel",layout="tree",rotation =2) -->
+<!-- sem_factorloadings(cfa_4,standardized = FALSE) -->
+<!-- sem_factorloadings(cfa_4,standardized = TRUE) -->
+<!-- modindices(cfa_4, sort = TRUE) -->
+<!-- resid(cfa_4, type='normalized') -->
+
+
+<!-- summary(cfa_3, rsquare=TRUE) -->
+
+<!-- ``` -->
+
+
+
+<!-- ```{r} -->
+<!-- library(readr) -->
+<!-- hafiza <- read_table2("hafiza.dat", col_names = FALSE) -->
+<!-- colnames(hafiza) <- paste("Madde",1:6,sep="") -->
+
+<!--  library(lavaan) -->
+<!--  model_5 <- 'gorsel =~ Madde1 + Madde2 + Madde3  -->
+<!--              metinsel =~ Madde4 + Madde5 + Madde6    -->
+<!--              Madde2 ~~ Madde3 -->
+<!--              gorsel ~~ Madde5' -->
+<!--  cfa_5 <- cfa(model_5,data= hafiza) -->
+<!-- semPaths(cfa_5,what="std",style="lisrel",layout="tree",rotation =2) -->
+
+
+<!-- ``` -->
+
+
+
+
+<!-- ```{r} -->
+<!-- # max_col <- max( count.fields("dissosiyatif.dat", sep = " ") )  -->
+<!-- # # Insert \t if tab-separated  -->
+<!-- #  -->
+<!-- # library(MCMCpack) -->
+<!-- # A <- read.table("dissosiyatif.dat", sep=" ", fill=TRUE, col.names=1:max_col) -->
+<!-- # corr <- xpnd( A[lower.tri(A, diag=T)] , max_col) -->
+<!-- # corr <- data.frame(corr) -->
+<!-- # colnames(corr) <- paste("D",1:28,sep="") -->
+<!-- # library(sem) -->
+
+<!-- #  -->
+<!-- #  library(lavaan) -->
+<!-- #  model_6 <- 'absorb =~ D1 + D2 + D10 + D15 + D16 + D17 + D18 + D19 + D20 + D21 + D22 + D23 + D24 + D25 + D26 -->
+<!-- #              amnezya =~ D3 + D4 + D5 + D6 + D8 + D9 -->
+<!-- #              depresyon =~ D7 + D11 + D12 + D13 + D27 + D28' -->
+<!-- #  cfa_6 <- cfa(model_6,sample.nobs = 971) -->
+<!-- #  sem_fitmeasures(cfa_6) -->
+<!-- # sem_sig(cfa_6) -->
+<!-- #  -->
+<!-- # semPaths(cfa_6,what="std",style="lisrel",layout="tree",rotation =2) -->
+
+
+<!-- ``` -->
+
+
+
+```{r include=FALSE}
+## xaringanBuilder::build_pdf("DFA.html")
+```
+
+<!-- https://methodenlehre.github.io/SGSCLM-R-course/cfa-and-sem-with-lavaan.html#confirmatory-factor-analysis-cfa -->
+
+<!-- https://stats.oarc.ucla.edu/r/seminars/rcfa/ -->

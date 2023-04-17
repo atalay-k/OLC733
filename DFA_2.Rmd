@@ -1,0 +1,721 @@
+---
+title: "`r emo::ji('chart')` Doğrulayıcı Faktör Analizi"
+subtitle: "<br> `r emo::ji('graph')`  Uygulama"
+author: "Dr. Kubra Atalay Kabasakal"
+date: "Bahar 2023"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+---   </div>
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+---
+## Uygulama
+
+- Yaşam doyumu verileri, yaşam doyumunun farklı yönlerine/alanlarına ilişkin 10 maddeden oluşmaktadır. Ne kadar mennunsun: 
+
+.pull-left[
+.small[
+|   |   |
+|---|---|
+|m1 |okul notun|
+|m2 |dış görünüşünüz |
+|m3 |öğretmeninizle ilişkiniz|
+|m4 |okul hayatın|
+|m5 |sosyal hayatınız|
+|m6 |senin kişiliğin|
+|m7 |arkadaşlarınızla olan ilişkileriniz|
+|m8 |anne babanla ilişkiniz|
+|m9 |senin aile hayatın|
+|m10| sosyo-ekonomik durumunuz|
+]
+]
+.pull-right[
+1 = “hiç memnun değilim” ile 
+7 = “çok memnunum” arasında 7 puanlık 
+bir ölçekle alınmış sonuçlar.
+]
+
+---
+# Verinin okunması
+```{r}
+library(openxlsx)
+yasamdoyum <- read.xlsx("yasamdoyum.xlsx")
+head(yasamdoyum)
+```
+
+
+---
+
+## Modelin tanımlanması
+
+```{r}
+model_1 <- 
+"
+okul =~ okul1 + okul2 + okul3
+kisi =~ kisi1 + kisi2
+arkadas =~ arkadas1 + arkadas2
+aile =~ aile1 + aile2 + aile3
+"
+```
+
+---
+# DFA modelinin testi
+
+.xsmall[
+```{r message=FALSE, warning=FALSE}
+library(lavaan)
+model_1_fit <- cfa(model_1, data = yasamdoyum)
+summary(model_1_fit, fit.measures = TRUE, standardized = TRUE)
+```
+
+]
+
+---
+# DFA modelinin testi
+
+- Analizin çıktıları incelendiğinde, ilk olarak iterasyon sayısı, modelde kestirilen parametre sayısı, gözlem sayısı ve kullanılan kestirim yöntemi bilgileri yer almaktadır.
+
+- Sonrasında ki-kare istatistikleri ve model uyum indeksleri raporlanmıştır. 
+
+- Bu çıktıları daha düzgün elde etmek içi **semoutput** paketi kullanılabilir.
+
+```{r}
+# devtools::install_github("dr-JT/semoutput")
+library(semoutput)
+sem_sig(model_1_fit)
+```
+
+
+
+---
+# DFA modelinin testi
+
+- Model uyum istatistikleri semoutputtan aşağıdaki şekilde elde edilebilir.
+
+```{r}
+library(semoutput)
+sem_fitmeasures(model_1_fit)
+```
+
+---
+# DFA modelinin testi
+- Model uyum istatistikleri fitmeasures fonkisyonu ile aşağıdaki şekilde elde edilebilir.
+
+
+```{r}
+fitmeasures(model_1_fit,fit.measures = c("chisq" ,"df" , "pvalue","cfi","tli","rmsea","rmsea.ci.lower",   
+"rmsea.ci.upper","srmr"))
+```
+
+
+
+---
+# DFA modelinin testi
+
+- Esnek kesim noktaları
+
+```{r message=FALSE, warning=FALSE}
+library(FCO)
+fits.esnek <- gen_fit(mod1 = model_1, x = yasamdoyum[,4:13], rep = 100)
+flex_co(fits = fits.esnek, index = c("CFI", "SRMR"))$cutoff
+
+```
+
+```{r}
+recommend(fits.esnek)$cutoffs
+```
+
+
+
+---
+# DFA modelinin testi
+
+- Model uyum indekslerini takiben **faktör yükleri**, **standart hataları**,** z değerleri ve p değerleri** gelmektedir. 
+
+- **p** değerleri maddelere ilişkin **faktör yüklerinin sıfırdan anlamlı düzeyde farklı olup olmadığına** ilişkin bilgi verir. 
+
+- Faktör yükleri incelendiğinde, **her bir faktörün ilk maddesinin referans madde olarak tanımlandığı** ve **faktör yüklerinin bire eşitlendiği** görülmektedir. 
+
+- Bu maddelere ilişkin standart hatalar, z ve p değerleri hesaplanmamıştır. Faktör yükler tablosunun ardından ise faktörler arası kovaryans, madde ve faktör varyans kestirimleri, standart hataları, z ve p değerleri yer almaktadır. 
+
+---
+# DFA modelinin testi
+
+.small[
+```{r}
+sem_factorloadings(model_1_fit,standardized = FALSE)
+```
+]
+
+
+---
+# DFA modelinin testi
+
+
+- okul2 göstergesinin yükü **1.431** olarak kestirilmiştir.
+
+- Bu değer faktör puanındaki birbirimlik değişikliğin okul2 puanında 
+1.431  birimlik değişikliğe yol açacağı şeklinde yorumlanır. 
+
+ - Ancak bu değerler kendi başlarına **çok anlamlı olmadığından 
+standartlaştırılmamış yüklerin yorumlanmasında** dikkatli olmak 
+gerekir.
+
+- Ölçülen göstergelerde **faktörün yordayıcı gücünü karşılaştırmak 
+için daha anlamlı bir yaklaşım standartlaştırılmış yüklerin** 
+yorumlanmasıdır. 
+
+---
+# DFA modelinin testi
+
+.small[
+
+
+```{r}
+sem_factorloadings(model_1_fit,standardized = TRUE)
+
+```
+]
+
+
+---
+## Kestitimler
+
+- parametre kestirimleri ise **coef()**, 
+**parameterEstimates()** fonksiyonlarıyla elde edilebilir. 
+
+- **coef()** fonksiyonu faktör yükleri, madde varyansları, faktör varyansları ve kovaryanslarının sadece parametre kestirimlerini verirken, 
+
+- **parameterEstimates()** fonksiyonu parametre kestirimlerinin yanı sıra kestirimlerin standart hatalarını, güven aralıklarını, istenmesi durumunda standartlaştırılmış değerlerini ve $R^2$ değerlerini verir.
+
+
+
+---
+# Açıklanan varyans
+
+.pull-left-narrow[
+```{r}
+varyanslar <- 
+summary(model_1_fit, 
+rsquare=TRUE)
+varyanslar <- varyanslar$pe
+varyanslar[,5:8] <- 
+round(varyanslar[,5:8],2)
+```
+]
+
+.pull-right-wide[
+.xsmall[
+```{r message=FALSE, warning=FALSE}
+library(DT)
+
+datatable(varyanslar)
+```
+]
+]
+
+---
+# Açıklanan varyans
+
+
+```{r}
+sem_factorvar(model_1_fit)
+```
+
+
+---
+# Açıklanan varyans
+
+Genel olarak $R^2$ değeri aşağıdaki formülle elde edilir:
+
+$$R^2_{X_i}=\frac{\lambda^2_{i}\sigma^2_{\xi}}{\sigma^2_{X_i}}$$
+
+- Örneğin okul2  değişkenin açıkladığı varyans 0.407 olarak kestirilmiştir.
+
+- Bu kestirim okul2  değişkenin **faktör yükünün karesinin**, okul **gizil değişkeninin açıkladığı varyans** ile çarpımının, **okul2 değişkeninin varyansına bölümü** ile hesaplanır.
+.small[
+```{r}
+(1.431^2 * 0.327) / var(yasamdoyum$okul2)
+```
+
+- Bu değer okul2’deki varyansın yaklaşık **%41**inin  faktör tarafından açıklandığı şeklinde yorumlanır.
+]
+
+---
+# Açıklanan varyans
+
+- $R^2$ değerinin kare kökü, faktör ve ilgili gösterge arasındaki  korelasyon katsayısıdır. 
+
+- okul2 göstergesi için $R^2$  değeri **0.407**’tür. Bu değerin karekökü **0.638** değerine eşit olup okul2 göstergesinin **standartlaştırılmış** faktör yüküdür. 
+
+- okul3 göstergesi için $R^2$ değeri **0.735**’dur. Bu değerin karekökü **0.857** değerine eşit olup okul3 göstergesinin **standartlaştırılmış** 
+faktör yüküdür. 
+
+---
+## Artık Varyanslar ve R²
+
+Ayrıca maddelere ilişkin kovaryans matrisi **fitted()** fonksiyonuyla; atıklar **resid()** fonksiyonuyla elde edilebilir.
+
+```{r }
+
+resid(model_1_fit, type = "normalized")
+
+```
+
+---
+## Artık Varyanslar ve R²
+
+
+- 2.58'i gecen değerler p<0.01 için, 
+- 1.96'yı gecen değerler ise p<0.05 için anlamlıdır.
+
+  - **aile1 ~~  okul1**
+  - **aile3 ~~  kisi2**
+
+
+---
+## Artık Varyanslar ve R²
+
+- **Artık varyans** her bir ölçülen 
+değişkenin faktör tarafından 
+**açıklanmayan varyans** miktarıdır. 
+
+- Örneğin, okul2 değişkenin varyansı 1.65 olarak 
+kestirilmiştir. 
+
+```{r}
+var(yasamdoyum$okul2)
+```
+
+-  okul2 değişkenin okul faktörü 
+tarafından açıklanmayan varyans 
+miktarı 0.978 olarak kestirilmiştir. 
+
+- Bu nedenle, okul2 değişkenin okul faktörü 
+tarafından açıklanan varyans miktarı $1.65  -0.978    = 0.672$
+---
+## Artık Varyanslar ve R²
+
+- $R^2$  okul faktörü tarafından açıklanan 
+ açıklanan varyans oranıdır: $R^2 = 0.672/1.65  = 0.407$
+
+- okul faktörü   tarafından 
+açıklanmayan varyans oranı ise: $1 -  0.407=  0.593$
+
+
+
+```{r echo=FALSE}
+pars <- parameterEstimates(model_1_fit,standardized = TRUE)
+pars[12,]
+```
+
+
+---
+## Artık Varyanslar ve R²
+
+- Artık varyans ve $R^2$  arasındaki 
+genel ilişki:
+
+- Standartlaştırılmamış çözüm için artık varyans: 
+
+    - $\sigma^2_{X_i}(1-R^2)$
+
+- Standartlaştırılmış çözüm için artık varyans::
+
+    - $(1-R^2)$
+    - $(1-\lambda_i^2)$
+
+
+- Bu iki formül standartlaştırılmış artık ve $R^2$ arasındaki ilişki ve 
+standartlaştırılmış artık ve  standartlaştırılmış yük arasındaki 
+ilişki hakkında bilgi verir. 
+---
+## semPlot” Paketi 
+
+- **semPlot** paketi YEM analizlerine ilişkin diyagramların çizilmesine olanak sağlayan fonksiyonları içerir. 
+
+- Paket içinde yer alan **semPaths()** fonksiyonu **lavaan** fonksiyonlarının çıktılarıyla doğrudan çalıştırılabildiğinden, YEM analizlerine ilişkin diyagramların çizilmesinde oldukça kullanışlıdır. 
+
+- **semPaths()** fonksiyonunun diyagramların özelleştirilmesine ilişkin çok sayıda argümanı bulunmaktadır. 
+
+
+---
+## semPaths
+
+
+| Argüman |	Açıklama |	Değerleri |
+| --------|---------|---------|
+|Object	|YEM modeli analiz çıktısını içeren nesnedir. |
+|What	|Diyagramda hangi değerlerin gösterileceği tanımlanır. |	“path”, “diagram” ve “mod”: yalnızca diyagramı “est” ve “par” kestirilen; “stand” ve “std” standartlaştırılmış parametreler “eq” ve “cons” eşitlenen parametreler aynı renkle gösterilir. |
+|whatLabels	|Yol çizgilerinde hangi değerlerin gösterileceği tanımlanır. |	what argümanıyla aynı değerleri alır. |
+
+
+
+---
+## semPaths
+
+| Argüman |	Açıklama |	Değerleri |
+| --------|---------|---------|
+|Style	|Diyagramın biçimi tanımlanır.	“ram”, “mx”, “OpenMx”, “lisrel”|
+|layout	|Diyagramın tasarımı tanımlanır. |	“tree”, “tree2”, “circle”, “circle2”, “spring”|
+|title|	Çoklu grup analizlerde grup adlarının diyagram başlığı olarak tanımlanması sağlanır.|	|
+|Reorder|	Faktör yüklerine göre sıralama yapılır.| 	TRUE, FALSE|
+|edge.label.cex	|Yol çizgilerinde yer alan parametre kestirim değerlerinin font büyüklüğüdür.| 	Sayısal değer|
+
+
+---
+## semPaths
+
+
+| Argüman |	Açıklama |	Değerleri |
+| --------|---------|---------|
+|color|	Diyagramdaki şekillerin renkleri tanımlanır. |	Liste: list(man=””, lat= “”, int=””) man: gözlenen, lat: gizil değişken, int: kesişim|
+|rotation|	Diyagramın yönü belirlenir. |	1, 2, 3, 4|
+|NCharNodes|	Değişken adlarının maksimum kaç karakter olacağı tanımlanır. |	Sayısal değer|
+|SizeMan|	Gözlenen değişkene ilişkin dörtgen şeklinin büyüklüğü tanımlanır. |	Sayısal değer|
+|sizeLat|	Gizil değişkene ilişkin daire şeklinin büyüklüğü tanımlanır. |	Sayısal değer |
+
+
+
+
+---
+# DFA modelinin testi
+.pull-left[
+Standartlaştırılmamış Çözümler
+
+```{r fig.align='center',out.width="75%"}
+library(semPlot)
+semPaths(model_1_fit, what="par",
+rotation = 2 )
+```
+]
+
+---
+# DFA modelinin testi
+
+.pull-left[
+Standartlaştırılmış Çözümler
+```{r fig.align='center',out.width="75%"}
+semPaths(model_1_fit, what="std",
+rotation = 2 )
+```
+]
+
+---
+## Faktörler arası korelasyon
+```{r}
+sem_factorcor(model_1_fit)
+```
+
+---
+# DFA modelinin testi
+
+.xsmall[
+Standartlaştırılmamış Çözümler
+```{r message=FALSE, warning=FALSE}
+model_1_v1 <- 
+"okul =~ NA*okul1 + okul2 + okul3
+kisi =~ NA*kisi1 + kisi2
+arkadas =~ NA*arkadas1 + arkadas2
+aile =~ NA*aile1 + aile2 + aile3
+ kisi ~~ 1*kisi
+ arkadas ~~ 1*arkadas
+ aile ~~ 1*aile"
+model_1_v1_fit <- cfa(model_1_v1,yasamdoyum)
+parameterestimates(model_1_v1_fit,standardized = TRUE)[11:14,]
+```
+aynı standartlaştırılmış çözümleri sağlar.
+
+]
+
+---
+## Modifikasyon indeksleri
+
+- **modindices()** fonksiyonu doğrudan **cfa()** fonksiyonun çıktılarının atandığı ile çalıştırıldığında tüm modifikasyonları, 
+
+- modifikasyon yapıldığında ki-karedeki değişimi (mi değeri), 
+
+- parametrelerdeki beklenen değişimi (epc) ve 
+
+- istenmesi durumunda epc değerinin standartlaştırılmış değerlerini verir.
+
+.xsmall[
+```{r}
+modindices(model_1_fit, sort=TRUE, standardized=FALSE)
+```
+]
+
+---
+## Üç faktörlü model
+
+```{r}
+model_2f <- "
+okul =~ okul1 + okul2 + okul3
+kisi_arkadas =~ kisi1 + kisi2 + arkadas1 + arkadas2
+aile =~ aile1 + aile2 + aile3
+"
+model_2_fit <- cfa(model_2f, data = yasamdoyum)
+sem_sig(model_2_fit)
+
+```
+
+
+---
+## Üç faktörlü model
+
+.small[
+```{r}
+sem_fitmeasures(model_2_fit)
+
+```
+
+]
+
+---
+## Üç faktörlü model
+
+```{r}
+fits.esnek2 <- gen_fit(mod1 = model_2f , x = yasamdoyum[,4:13], rep = 100)
+
+flex_co(fits = fits.esnek2, index = c("CFI", "SRMR"))$cutoff
+```
+
+---
+## Üç faktörlü model
+
+.xsmall[
+```{r}
+sem_factorloadings(model_2_fit)
+```
+]
+
+---
+## Model karşılaştırma
+
+- Eğer iki model hiyerarşikse ve her ikisi de veriye kabul 
+edilebilir ölçüde uyum sağlıyorsa, iki modelin veriye 
+uyumunu karşılaştırmak için ki-kare fark test 
+uygulanabilir.
+
+- üçfaktörlü model iyi uyum göstermediği için sadece örnek amaçlı:
+
+```{r}
+anova(model_1_fit,model_2_fit )
+```
+
+---
+## Model karşılaştırma
+
+- Verilen örneklerde, üç faktörlü model dört faktörlü modelin 
+içinde kümelenmiştir. 
+
+-  Üç faktörlü model veriye iyi uyum sağlamamıştır, dört 
+faktörlü model çeşitli uyum indekslerinin de gösterdiği 
+üzere çok daha iyi uyum sağlamıştır. Bu nedenle, dört 
+faktörlü modelin seçimini desteklemek için ki-kare fark 
+testi uygulamaya gerek yoktur
+
+- Ki-kare fark testi dört faktörlü  modelin üç faktörlü modelden 
+anlamlı olarak daha iyi uyum sağladığını önerir. Bu nedenle dört 
+faktörlü model tercih edilir.
+
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+- Bazı durumlarda sadece ölçümler arasındaki 
+kovaryansları değil, **faktörler arasındaki kovaryansları 
+açılayacak faktörlerin** hipotez edildiği daha yüksek 
+dereceli faktör modelleri geliştirilebilir. 
+
+  - Birinci dereceli faktörler (First-order factors): Bir grup göstergenin 
+altında yatan faktörler. 
+
+  - İkinci dereceli faktörler (Second-order factors): Birinci dereceli 
+faktörlerin altında yatan faktörler. 
+
+  - Daha yüksek dereceli faktörler (Higher-order factors): Potensiyel 
+olarak eğer aralarında korelasyon bulunan bir grup ikinci dereceli 
+faktör varsa, bu faktörlerin altında yatan daha yüksek dereceli 
+faktörler önerilebilir. 
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+Bir Örnek: Zeka
+
+- Bazı zeka araştırmacıları zeka ölçümlerinin hiyerarşik 
+faktör yapılarıyla daha doğru bir şekilde 
+modellenebileceğini belirtmişlerdir: 
+
+  - Birinci dereceli faktörler (First-order factors): sözel, sayısal, 
+mekanik bilgi, uzamsal ve psikomotor beceriler
+  - İkinci dereceli faktörler (Second-order factors): 
+      - Sözel/eğitimsel faktör: Birinci-dereceli faktörlerden sözel ve 
+sayısal faktörleri kontrol edebilir.
+      - Beceri/pratik faktör: Birinci-dereceli faktörlerden mekanik bilgi, 
+uzamsal ve psikomotor beceriler faktörlerini kontrol edebilir.
+      - Üçüncü dereceli faktör (Third-order factor): genel zeka
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+```{r echo=FALSE, fig.align='center',out.width="50%"}
+knitr::include_graphics("DFA_13.PNG")
+```
+.small[
+- F1, F2 ve F3  faktörleri  arasındaki 
+kovaryanslar  daha yüksek  dereceli bir faktör 
+tarafından  açıklanır: F4
+]
+
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+Standart bir DFA modelinde faktörler
+  - dışsaldır ve
+  - içsel olan ölçülen değişkenleri etkilerler.
+Bu nedenle, hem ULI hem de UVI faktörlere ölçek
+atanmasında uygundur.
+
+- Daha yüksek dereceli faktör modellerinde, daha yüksek
+dereceli faktörler
+  - dışsaldır ve
+  - içsel olan ölçülen değişkenleri daha düşük faktörler aracılığıyla
+dolaylı olarak etkilerler.
+
+- Bu nedenle, hem ULI hem de UVI daha yüksek dereceli
+faktörlere ölçek atanmasında uygundur.
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+
+- Ancak yüksek dereceli bir faktör modelinde, bütün daha
+düşük dereceli faktörler artık dışsal değildir (örneğin, F1,
+F2 ve F3 faktörleri F4 faktöründen etkilenir. Bu nedenle
+F1, F2 ve F3 faktörleri içseldir).
+
+$F_2= \beta_2*F_4 + \zeta_2$
+- Sonuç olarak, her bir daha düşük dereceli faktörün bir
+artığı vardır (örneğin, F2 faktörü için ζ2)
+
+-  $\zeta_2$’nin varyansı F4 faktörü tarafından açıklanmayan F2 faktörünün
+varyansının bir parçası olarak açıklanabilir.
+
+.small[
+-  Bu nedenle daha düşük dereceli faktörlerin varyansları
+1’e eşitlenemez, diğer bir ifadeyle UVI uygun
+olmayacaktır.
+
+-  Bunun yerine her bir daha düşük dereceli faktör için
+ölçekleme yüklerinden birinin 1’e sabitlenmesiyle
+tanımlanabilir, diğer bir ifadeyle ULI uygun olacaktır.
+]
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+Rindskopf ve Rose (1988) daha yüksek dereceli bir
+modelin değerlendirilmesinin diğer üç modelle
+karşılaştırılmasını içermesi gerektiğini önermişlerdir.
+Adımsal modelleme yöntemi önermişlerdir:
+-  Adım 1: Genel, tek faktörlü modelin uyumu
+-  Adım 2: İkinci dereceli faktör modeliyle karşılaştırma
+-  Adım 3: Korelasyonlu grup faktör modeliyle karşılaştırma
+-  Adım 4: İkili faktörlü (bi-factor) modelle karşılaştırma
+
+
+
+----
+.xsmall[Rindskopf, D. & Rose, T. (1988. Some theory and applications of confirmatory
+second-order factor analysis. *Multivariate Behavioral Research, 23*(1), 51-67]
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+
+```{r echo=FALSE, fig.align='center',out.width="60%"}
+knitr::include_graphics("DFA_18.PNG")
+```
+*Şemalar Rindskopf ve Rose (1988)’dan alınmıştır.
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+```{r}
+model_2order <-  "
+okul =~ okul1 + okul2 + okul3
+kisi =~ kisi1 + kisi2
+arkadas =~ arkadas1 + arkadas2
+aile =~ aile1 + aile2 + aile3
+
+# ikinci düzey model
+doyum =~ okul + kisi + arkadas + aile
+"
+```
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+.xsmall[
+```{r}
+fit_model_2order <- cfa(model_2order, yasamdoyum)
+summary(fit_model_2order, fit.measures = TRUE, standardized = TRUE)
+```
+]
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+```{r}
+sem_fitmeasures(fit_model_2order)
+```
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+.small[
+```{r}
+sem_factorloadings(fit_model_2order,standardized = TRUE)
+```
+]
+
+
+---
+
+## Daha Yüksek Dereceli Faktör Modelleri
+
+```{r}
+anova(fit_model_2order, model_2_fit, model_1_fit )
+```
+
+---
+## Daha Yüksek Dereceli Faktör Modelleri
+
+```{r}
+semPaths(fit_model_2order, "std", weighted = FALSE, nCharNodes = 7, 
+         shapeMan = "rectangle", sizeMan = 8, sizeMan2 = 5)
+```
+
+
+---
+
+.center[.hand[bitti]]
