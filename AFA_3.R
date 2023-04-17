@@ -1,3 +1,4 @@
+options(digits=3)
 library(dplyr)
 library(tidyverse)
 library(dplyr)
@@ -57,7 +58,6 @@ text(zz.coords$x,
      pos = 4) 
 
 print(out_dik$loadings[2:3,], digits = 3, cutoff = 0.30)
-
 
 
 out_egik <- fa(veri,3,fm="pa",rotate="oblimin")

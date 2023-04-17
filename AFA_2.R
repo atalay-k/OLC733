@@ -1,3 +1,5 @@
+
+options(digits=3)
 library(dplyr)
 library(tidyverse)
 library(dplyr)
@@ -21,9 +23,9 @@ KMO(veri)
 KMO(veri)
 
 
-## kor_mat <- tetrachoric(veri)$rho
-## KMO(kor_mat)
-## 
+kor_mat <- tetrachoric(veri)$rho
+KMO(kor_mat)
+
 
 bartlett.test(AFA)
 
@@ -37,11 +39,11 @@ bartlett.test(AFA)
 out <- fa(veri, nfactors = 3,fm="pa",rotate="none")
 out
 
-knitr::include_graphics("img/AFA_2.PNG")
-
 scree(veri)
 
-(residuals <-round(out$residual,2))
+residuals <- round(out$residual,2)
+library(Matrix)
+tril(residuals,-1)
 
 sum(abs(residuals[lower.tri(residuals)])>0.05)
 
@@ -69,7 +71,8 @@ c(sum(out$loadings[,2]^2),sum(out$loadings[,3]^2))
 
 out$Vaccounted
 
-factor.model(out$loadings)
+tril(factor.model(out$loadings))
 
 rep_matrix <- factor.model(out$loadings)
 diag(rep_matrix)==out$communality
+

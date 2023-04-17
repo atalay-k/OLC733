@@ -1,3 +1,5 @@
+
+options(digits=3)
 library(dplyr)
 library(tidyverse)
 library(dplyr)
