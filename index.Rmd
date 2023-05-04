@@ -65,7 +65,7 @@ startdate <- as.Date("2023-02-27")
 
 
 # Ders İçerik
-## Hafta 1 28 Subat: Varsayımlar 
+##  Varsayımlar 
 - Verinin Doğruluğu - `r emo::ji("press")`[sunu](01_Veri_Inceleme.pdf) - `r emo::ji("software")`[R](01_Veri_Inceleme.R)
 - Kayıp veri Miktarı ve Dağılımı `r emo::ji("press")`[sunu](02_Kayıp_Degerler.pdf) - `r emo::ji("software")`[R](02_Kayıp_Degerler.R)
 - Normallik ve Çok değişkenli normallik `r emo::ji("press")`[sunu](03_Normallik.pdf) - `r emo::ji("software")`[R](03_Normallik.R)
@@ -77,7 +77,7 @@ startdate <- as.Date("2023-02-27")
     - `r emo::ji('link')`[Kullanılan veri SCREEN.sav](SCREEN.sav)
 
 
-## Hafta 2  7 Mart : Çoklu Regresyon
+##  Çoklu Regresyon
 
 - Basit Doğrusal Regresyon - `r emo::ji("press")`[sunu](CR_1.pdf) - `r emo::ji("software")`[R](CR_1.R)
 - Çoklu Regresyon - `r emo::ji("press")`[sunu](CR_2.pdf) - `r emo::ji("software")`[R](CR_2.R)
@@ -88,16 +88,16 @@ startdate <- as.Date("2023-02-27")
     - `r emo::ji('link')`[Kullanılan veri Hassles.sav](Hassles.sav)
 
 
-## Hafta 4  21 Mart : Yol Analizi- I
+##  Yol Analizi- I
 
-- Yol Analizi Modeli[sunu](Yolanalizi_1.pdf) - `r emo::ji("software")`[R](Yolanalizi_1.R)
+- Yol Analizi Modeli [sunu](Yolanalizi_1.pdf) - `r emo::ji("software")`[R](Yolanalizi_1.R)
 -  Modeli Tanımlama [sunu](Yolanalizi_2.pdf) - `r emo::ji("software")`[R](Yolanalizi_2.R)
 -  Model Veri Uyumu [sunu](Yolanalizi_3.pdf) - `r emo::ji("software")`[R](Yolanalizi_3.R)
 
 `r emo::ji('link')`[Kullanılan veri illness.dat](illness.dat)
 
 
-## Hafta 5  28 Mart: Açımlayıcı Faktör Analizi
+##  Açımlayıcı Faktör Analizi
 - Temel Kavramlar [sunu](AFA_1.pdf) - `r emo::ji("software")`[R](AFA_1.R)
   - Örüntü Katsayısı
   - Yapı Katsayısı
@@ -114,7 +114,34 @@ startdate <- as.Date("2023-02-27")
 
 
 
-### Hafta 6  4 Nisan: Doğrulayıcı Faktör Analizi
+###  Doğrulayıcı Faktör Analizi
+
+
+- Temel Kavramlar [sunu](DFA_1.pdf) - `r emo::ji("software")`[R](DFA_1.R)
+- Bir Örnek [sunu](DFA_2.pdf) - `r emo::ji("software")`[R](DFA_2.R)
+- Ölçme Değişmezliği [sunu](DFA_3.pdf) - `r emo::ji("software")`[R](DFA_3.R)
+
+`r emo::ji('link')`[Kullanılan veri yasamdoyum.xlsx](yasamdoyum.xlsx)
+
+
+###  Progralamaya Giriş
+
+- Fonksiyonlar [sunu](1_Fonksiyonlar.pdf) - `r emo::ji("software")`[R](1_Fonksiyonlar.R)
+- Mantiksal Operatorler [sunu](2_mantiksal_operatorler.pdf) - `r emo::ji("software")`[R](2_mantiksal_operatorler.R)
+- Koşullu Önermeler [sunu](3_kosullu-onermeler.pdf) - `r emo::ji("software")`[R](3_kosullu-onermeler.R)
+- Döngüler [sunu](4_donguler.pdf) - `r emo::ji("software")`[R](4_donguler.R)
+
+
+
+`r emo::ji('link')`[Kullanılan veri df.csv](df.csv)
+  
+`r emo::ji('link')`[Kullanılan veri sp500](sp500.rds)
+
+
+
+
+
+
 ### Hafta 7  11 Nisan : Klasik Test Kuramı
 ### Hafta 8  18 Nisan : Klasik Test Kuramına Dayalı DMF Analizleri
 ### Hafta 9  25 Nisan : Klasik Test Kuramına Dayalı Eşitleme Analizleri
