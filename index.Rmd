@@ -129,7 +129,11 @@ startdate <- as.Date("2023-02-27")
 - Fonksiyonlar [sunu](1_Fonksiyonlar.pdf) - `r emo::ji("software")`[R](1_Fonksiyonlar.R)
 - Mantiksal Operatorler [sunu](2_mantiksal_operatorler.pdf) - `r emo::ji("software")`[R](2_mantiksal_operatorler.R)
 - Koşullu Önermeler [sunu](3_kosullu-onermeler.pdf) - `r emo::ji("software")`[R](3_kosullu-onermeler.R)
-- Döngüler [sunu](4_donguler.pdf) - `r emo::ji("software")`[R](4_donguler.R)
+- Döngüler 
+- for [sunu](4_for_dongu.pdf)
+- while [sunu](5_while.pdf)
+- repeat [sunu](6_repeat.pdf)
+- apply [sunu](7_apply.pdf)
 
 
 
@@ -138,15 +142,34 @@ startdate <- as.Date("2023-02-27")
 `r emo::ji('link')`[Kullanılan veri sp500](sp500.rds)
 
 
+### Klasik Test Kuramı
+
+- Veri İnceleme [sunu](ctt_1.pdf) - `r emo::ji("software")`[R](ctt_1.R)
+- KTK'ya dayalı analizler [sunu](ctt_2.pdf) - `r emo::ji("software")`[R](ctt_2.R)
+- Madde analizi ve DIF [sunu](ctt_3.pdf) - `r emo::ji("software")`[R](ctt_3.R)
+
+`r emo::ji('link')`[Kullanılan veri nfc_data.csv](nfc_data.csv)
+  
+`r emo::ji('link')`[Kullanılan veri hci.csv](hci.csv)
+
+`r emo::ji('link')`[Kullanılan veri hci_key.csv](hci_key.csv)
+
+`r emo::ji('link')`[Kullanılan veri hci_scored.csv](hci_scored.csv)
+
+### Madde Tepki Kuramı
+
+- 1PL Model [sunu](MTK_1.pdf) - `r emo::ji("software")`[R](MTK_1.R)
+- 2PL Model [sunu](MTK_2.pdf) - `r emo::ji("software")`[R](MTK_2.R)
+- 3PL Model [sunu](MTK_3.pdf) - `r emo::ji("software")`[R](MTK_3.R)
+- Madde ve Test Bilgi [sunu](MTK_4.pdf) - `r emo::ji("software")`[R](MTK_4.R)
+
+`r emo::ji('link')`[Kullanılan veri veri.csv](veri.csv)
+`r emo::ji('link')`[Kullanılan veri veri_2.csv](veri_2.csv)
+
+`r emo::ji('link')`[Kullanılan veri dichotomous.csv](dichotomous.csv)
 
 
+###  Veri Üretimi,
+- İki kategorili Modeler
+- Çok kategorili Modeler
 
-
-### Hafta 7  11 Nisan : Klasik Test Kuramı
-### Hafta 8  18 Nisan : Klasik Test Kuramına Dayalı DMF Analizleri
-### Hafta 9  25 Nisan : Klasik Test Kuramına Dayalı Eşitleme Analizleri
-### Hafta 10 : Klasik Test Kuramına Dayalı Eşitleme Analizleri
-### Hafta 11   : Veri Üretimi- İki kategorili Modeler
-### Hafta 12  : Veri Üretimi- Çok kategorili Modeler
-### Hafta 13 : Madde Tepki Kuramı Dayalı DMF Analizleri
-### Hafta 14  : -
