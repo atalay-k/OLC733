@@ -1344,17 +1344,23 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+content: "";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "\e258";
-font-family: 'Glyphicons Halflings';
+content: "";
 border: none;
+}
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -1520,9 +1526,9 @@ cevabı 20 dakika içinde moodle yüklemeniz beklenecektir.</p></li>
 <div id="varsayımlar" class="section level2">
 <h2>Varsayımlar</h2>
 <ul>
-<li>Verinin Doğruluğu - 📰<a href="01_Veri_Inceleme.pdf">sunu</a> - 👩‍💻<a href="01_Veri_Inceleme.R">R</a></li>
+<li>Verinin Doğruluğu - 🗞<a href="01_Veri_Inceleme.pdf">sunu</a> - 👩‍💻<a href="01_Veri_Inceleme.R">R</a></li>
 <li>Kayıp veri Miktarı ve Dağılımı 🗞<a href="02_Kayıp_Degerler.pdf">sunu</a> - 👩‍💻<a href="02_Kayıp_Degerler.R">R</a></li>
-<li>Normallik ve Çok değişkenli normallik 📰<a href="03_Normallik.pdf">sunu</a> - 👩‍💻<a href="03_Normallik.R">R</a>
+<li>Normallik ve Çok değişkenli normallik 📰<a href="03_Normallik.pdf">sunu</a> - 👨‍💻<a href="03_Normallik.R">R</a>
 <ul>
 <li><p>Tek Değişkenli ve Çok Değişkenli Uç Değerler (Outliers)</p></li>
 <li><p>Varyansların homojenliği</p></li>
@@ -1537,7 +1543,7 @@ cevabı 20 dakika içinde moodle yüklemeniz beklenecektir.</p></li>
 <div id="çoklu-regresyon" class="section level2">
 <h2>Çoklu Regresyon</h2>
 <ul>
-<li><p>Basit Doğrusal Regresyon - 📰<a href="CR_1.pdf">sunu</a> - 👩‍💻<a href="CR_1.R">R</a></p></li>
+<li><p>Basit Doğrusal Regresyon - 📰<a href="CR_1.pdf">sunu</a> - 👨‍💻<a href="CR_1.R">R</a></p></li>
 <li><p>Çoklu Regresyon - 🗞<a href="CR_2.pdf">sunu</a> - 👨‍💻<a href="CR_2.R">R</a></p></li>
 <li><p>Bir Örnek - 🗞<a href="CR_3.pdf">sunu</a> - 👨‍💻<a href="CR_3.R">R</a></p>
 <ul>
@@ -1552,8 +1558,8 @@ Performand1.sav</a></li>
 <h2>Yol Analizi- I</h2>
 <ul>
 <li>Yol Analizi Modeli <a href="Yolanalizi_1.pdf">sunu</a> - 👩‍💻<a href="Yolanalizi_1.R">R</a></li>
-<li>Modeli Tanımlama <a href="Yolanalizi_2.pdf">sunu</a> - 👩‍💻<a href="Yolanalizi_2.R">R</a></li>
-<li>Model Veri Uyumu <a href="Yolanalizi_3.pdf">sunu</a> - 👨‍💻<a href="Yolanalizi_3.R">R</a></li>
+<li>Modeli Tanımlama <a href="Yolanalizi_2.pdf">sunu</a> - 👨‍💻<a href="Yolanalizi_2.R">R</a></li>
+<li>Model Veri Uyumu <a href="Yolanalizi_3.pdf">sunu</a> - 👩‍💻<a href="Yolanalizi_3.R">R</a></li>
 </ul>
 <p>🔗<a href="illness.dat">Kullanılan veri illness.dat</a></p>
 </div>
@@ -1582,17 +1588,17 @@ Performand1.sav</a></li>
 <ul>
 <li>Temel Kavramlar <a href="DFA_1.pdf">sunu</a> - 👩‍💻<a href="DFA_1.R">R</a></li>
 <li>Bir Örnek <a href="DFA_2.pdf">sunu</a> - 👩‍💻<a href="DFA_2.R">R</a></li>
-<li>Ölçme Değişmezliği <a href="DFA_3.pdf">sunu</a> - 👨‍💻<a href="DFA_3.R">R</a></li>
+<li>Ölçme Değişmezliği <a href="DFA_3.pdf">sunu</a> - 👩‍💻<a href="DFA_3.R">R</a></li>
 </ul>
 <p>🔗<a href="yasamdoyum.xlsx">Kullanılan veri yasamdoyum.xlsx</a></p>
 </div>
 <div id="progralamaya-giriş" class="section level3">
 <h3>Progralamaya Giriş</h3>
 <ul>
-<li>Fonksiyonlar <a href="1_Fonksiyonlar.pdf">sunu</a> - 👩‍💻<a href="1_Fonksiyonlar.R">R</a></li>
+<li>Fonksiyonlar <a href="1_Fonksiyonlar.pdf">sunu</a> - 👨‍💻<a href="1_Fonksiyonlar.R">R</a></li>
 <li>Mantiksal Operatorler <a href="2_mantiksal_operatorler.pdf">sunu</a>
 - 👨‍💻<a href="2_mantiksal_operatorler.R">R</a></li>
-<li>Koşullu Önermeler <a href="3_kosullu-onermeler.pdf">sunu</a> - 👩‍💻<a href="3_kosullu-onermeler.R">R</a></li>
+<li>Koşullu Önermeler <a href="3_kosullu-onermeler.pdf">sunu</a> - 👨‍💻<a href="3_kosullu-onermeler.R">R</a></li>
 <li>Döngüler</li>
 <li>for <a href="4_for_dongu.pdf">sunu</a></li>
 <li>while <a href="5_while.pdf">sunu</a></li>
@@ -1605,9 +1611,9 @@ Performand1.sav</a></li>
 <div id="klasik-test-kuramı" class="section level3">
 <h3>Klasik Test Kuramı</h3>
 <ul>
-<li>Veri İnceleme <a href="ctt_1.pdf">sunu</a> - 👩‍💻<a href="ctt_1.R">R</a></li>
+<li>Veri İnceleme <a href="ctt_1.pdf">sunu</a> - 👨‍💻<a href="ctt_1.R">R</a></li>
 <li>KTK’ya dayalı analizler <a href="ctt_2.pdf">sunu</a> - 👨‍💻<a href="ctt_2.R">R</a></li>
-<li>Madde analizi ve DIF <a href="ctt_3.pdf">sunu</a> - 👨‍💻<a href="ctt_3.R">R</a></li>
+<li>Madde analizi ve DIF <a href="ctt_3.pdf">sunu</a> - 👩‍💻<a href="ctt_3.R">R</a></li>
 </ul>
 <p>🔗<a href="nfc_data.csv">Kullanılan veri nfc_data.csv</a></p>
 <p>🔗<a href="hci.csv">Kullanılan veri hci.csv</a></p>
@@ -1617,10 +1623,10 @@ Performand1.sav</a></li>
 <div id="madde-tepki-kuramı" class="section level3">
 <h3>Madde Tepki Kuramı</h3>
 <ul>
-<li>1PL Model <a href="MTK_1.pdf">sunu</a> - 👩‍💻<a href="MTK_1.R">R</a></li>
+<li>1PL Model <a href="MTK_1.pdf">sunu</a> - 👨‍💻<a href="MTK_1.R">R</a></li>
 <li>2PL Model <a href="MTK_2.pdf">sunu</a> - 👩‍💻<a href="MTK_2.R">R</a></li>
 <li>3PL Model <a href="MTK_3.pdf">sunu</a> - 👩‍💻<a href="MTK_3.R">R</a></li>
-<li>Madde ve Test Bilgi <a href="MTK_4.pdf">sunu</a> - 👩‍💻<a href="MTK_4.R">R</a></li>
+<li>Madde ve Test Bilgi <a href="MTK_4.pdf">sunu</a> - 👨‍💻<a href="MTK_4.R">R</a></li>
 </ul>
 <p>🔗<a href="veri.csv">Kullanılan veri veri.csv</a> 🔗<a href="veri_2.csv">Kullanılan veri veri_2.csv</a></p>
 <p>🔗<a href="dichotomous.csv">Kullanılan veri dichotomous.csv</a></p>
@@ -1628,8 +1634,8 @@ Performand1.sav</a></li>
 <div id="veri-üretimi" class="section level3">
 <h3>Veri Üretimi,</h3>
 <ul>
-<li>İki kategorili Modeler</li>
-<li>Çok kategorili Modeler</li>
+<li>İki kategorili Modeler <a href="Veri%20Uretimi.pdf">sunu</a> - 👩‍💻<a href="Veri%20Uretimi.R">R</a></li>
+<li>Çok kategorili Modeler <a href="ATM.pdf">sunu</a> - 👨‍💻<a href="ATM.R">R</a></li>
 </ul>
 </div>
 </div>
