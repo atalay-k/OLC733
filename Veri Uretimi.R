@@ -80,8 +80,8 @@ buyuk_orn <- numeric(tekrar) # Büyük örneklem ort.
 orneklem.carpik <- rexp(n = 10000, rate = 1.5)#Sekil
 
 for (i in 1:tekrar) {
-  kucuk_orn[i] <- mean(rexp(n = 10000, rate = 1.5))
-  buyuk_orn[i] <- mean(rexp(n = 10000, rate = 1.5) ) 
+  kucuk_orn[i] <- mean(rexp(n = n_k, rate = 1.5))
+  buyuk_orn[i] <- mean(rexp(n = n_b, rate = 1.5) ) 
 
 } 
 
